@@ -1,4 +1,6 @@
 ﻿using System;
+using Infrastructure.Managers;
+using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,68 +15,41 @@ namespace Svivonim
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        private BasicEffect effect;
+        public BasicEffect Effect { get; private set; }
         private RasterizerState m_RasterizerState = new RasterizerState();
+        private CameraManager m_CameraManager;
+        private IInputManager m_InputManager;
 
-        private SimpleTriangle a;
-        private Box b;
-
-        #region Camera Initialization
-
-        // the data about the camera location/rotation/features:
-        private Matrix m_CameraSettings;
-        private Matrix m_CameraState;
-
-        private void setCameraSettings()
-        {
-            float k_NearPlaneDistance = 0.5f;
-            float k_FarPlaneDistance = 1000.0f;
-            float k_ViewAngle = MathHelper.PiOver4;
-
-            // we are storing the camera settings data in a matrix:
-            m_CameraSettings = Matrix.CreatePerspectiveFieldOfView(
-                k_ViewAngle,
-                GraphicsDevice.Viewport.AspectRatio,
-                k_NearPlaneDistance,
-                k_FarPlaneDistance);
-        }
-
-        // we want to look at the center of the 3D world:
-        Vector3 m_CameraLooksAt = Vector3.Zero;
-        // we are standing 80 units in front of our target:
-        Vector3 m_CameraLocation = new Vector3(1, 3, 10);
-        // the camera stands straight:
-        Vector3 m_CameraUpDirection = Vector3.Up;
-
-        private void setCameraState()
-        {
-            // we are storing the camera state data in a matrix:
-            m_CameraState = Matrix.CreateLookAt(
-                m_CameraLocation, m_CameraLooksAt, m_CameraUpDirection);
-        }
-        #endregion Camera Initialization
 
         public DradelGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            m_CameraManager = new CameraManager(this);
+            m_InputManager = new InputManager(this);
+
+            var a = new TextureBox(this, Vector3.Zero);
+
+            Components.Add(a);
         }
 
         protected override void Initialize()
         {
+            m_CameraManager.SetCameraSettings();
+            m_CameraManager.SetCameraState();
 
-            setCameraSettings();
-            setCameraState();
 
-            effect = new BasicEffect(GraphicsDevice);
-            Services.AddService(typeof(BasicEffect), effect);
+     
 
-            a = new SimpleTriangle(this, new Vector3(5, 0, 5));
-            //b = new SimpleTriangle(this, new Vector3(-5, 0, 5));
-            b = new Box(this);
 
-            Components.Add(a);
-            Components.Add(b);
+
+//            a = new SimpleTriangle(this, new Vector3(5, 0, 5));
+//           var  b = new Dradel(this);
+//           b.Initialize();
+
+//            Components.Add(a);
+//            Components.Add(b);
 
             m_RasterizerState.CullMode = CullMode.None;
 
@@ -108,9 +83,10 @@ namespace Svivonim
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            effect.View = m_CameraState;
-            effect.Projection = m_CameraSettings;
-            effect.GraphicsDevice.RasterizerState = m_RasterizerState;
+            
+//            Effect.View = m_CameraManager.CameraState;
+//            Effect.Projection = m_CameraManager.CameraSettings;
+//            Effect.GraphicsDevice.RasterizerState = m_RasterizerState;
 
             base.Draw(gameTime);
         }

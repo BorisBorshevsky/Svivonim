@@ -1,0 +1,108 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace Svivonim.ObjectModel
+{
+    class Box : Base3DElement
+    {
+        private const int k_NumberOfVertexs = 8;
+
+        public Texture2D BoxTexture { get; private set; }
+
+        public IndexBuffer IndexBuffer { get; set; }
+
+        public VertexBuffer VertexBuffer { get; set; }
+
+        private short[] indices;
+
+        public Box(Game i_Game)
+            : base(i_Game)
+        {
+
+        }
+
+
+        public override void Initialize()
+        {
+            base.LoadContent();
+            m_BasicEffect = new BasicEffect(this.GraphicsDevice);
+            BoxTexture = Game.Content.Load<Texture2D>(@"Textures2D\dradelTextures");
+            m_BasicEffect.Texture = BoxTexture;
+            m_BasicEffect.TextureEnabled = true;
+
+
+            VertexPositionColor[] vertices = new VertexPositionColor[k_NumberOfVertexs];
+
+            // vertex position and color information for icosahedron
+            vertices[0] = new VertexPositionColor(new Vector3(1, 1, 1), Color.Aqua);
+            vertices[1] = new VertexPositionColor(new Vector3(1, 1, -1), Color.Aqua);
+            vertices[2] = new VertexPositionColor(new Vector3(1, -1, 1), Color.Aqua);
+            vertices[3] = new VertexPositionColor(new Vector3(1, -1, -1),Color.Aqua);
+            vertices[4] = new VertexPositionColor(new Vector3(-1, 1, 1), Color.Aqua);
+            vertices[5] = new VertexPositionColor(new Vector3(-1, 1, -1),Color.Aqua);
+            vertices[6] = new VertexPositionColor(new Vector3(-1, -1, 1),Color.Aqua);
+            vertices[7] = new VertexPositionColor(new Vector3(-1, -1, -1),Color.Aqua);
+
+            VertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), vertices.Length, BufferUsage.WriteOnly);
+            VertexBuffer.SetData(vertices, 0, vertices.Length);
+
+            indices = new short[36];
+   
+            //top 
+            indices[0] = 1; indices[1] = 0; indices[2] = 5;
+            indices[3] = 0; indices[4] = 5; indices[5] = 4;
+
+            //left
+            indices[6] = 1; indices[7] = 2; indices[8] = 3;
+            indices[9] = 1; indices[10] = 2; indices[11] = 0;
+
+            //bottom
+            indices[12] = 3; indices[13] = 2; indices[14] = 7;
+            indices[15] = 7; indices[16] = 2; indices[17] = 6;
+
+            //right
+            indices[18] = 7; indices[19] = 5; indices[20] = 6;
+            indices[21] = 6; indices[22] = 5; indices[23] = 4;
+
+            //front
+            indices[24] = 3; indices[25] = 2; indices[26] = 7;
+            indices[27] = 7; indices[28] = 1; indices[29] = 5;
+
+            //back
+            indices[30] = 0; indices[31] = 4; indices[32] = 6;
+            indices[33] = 6; indices[34] = 0; indices[35] = 2;
+
+            IndexBuffer = new IndexBuffer(Game.GraphicsDevice, typeof(short), indices.Length, BufferUsage.WriteOnly);
+            IndexBuffer.SetData(indices);
+
+        }
+
+
+
+        protected override void DoDraw(GameTime i_GameTime)
+        {
+            m_BasicEffect.VertexColorEnabled = true;
+            m_BasicEffect.View = Matrix.CreateLookAt(new Vector3(-50, -20, -20), Vector3.Forward, Vector3.Up);
+
+
+//            m_BasicEffect.GraphicsDevice.Indices = IndexBuffer;
+//            m_BasicEffect.GraphicsDevice.SetVertexBuffer(VertexBuffer);
+////            GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, 8, 0, 12);
+//            m_BasicEffect.GraphicsDevice.DrawIndexedPrimitives(
+//                    PrimitiveType.TriangleList,
+//                    0, // baseVertex
+//                    0, // minVertexIdx
+//                    VertexBuffer.VertexCount, // num of vertices
+//                    0,  // startIdx in the vertexBuffer
+//                    12); // num of primitives 
+//
+//            
+
+            //            GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, m_Verts, 0, 5);
+        }
+    }
+}

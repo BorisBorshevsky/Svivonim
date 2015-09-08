@@ -10,20 +10,9 @@ namespace Svivonim.ObjectModel
         protected Vector3 m_Rotations = Vector3.Zero;
         protected Vector3 m_Scales = Vector3.One;
         protected Matrix m_WorldMatrix = Matrix.Identity;
+        protected BasicEffect m_BasicEffect;
+
         public bool SpinEnabled { get; set; }
-
-        private bool m_HasOwnEffect;
-
-        private BasicEffect m_Effect;
-        public BasicEffect Effect
-        {
-            get { return m_Effect; }
-            set
-            {
-                m_Effect = value;
-                m_HasOwnEffect = true;
-            } 
-        }
 
         private float m_RotationsPerSecond;
         public float RotationsPerSecond
@@ -34,6 +23,13 @@ namespace Svivonim.ObjectModel
 
         protected Base3DElement(Game i_Game) : base(i_Game)
         {
+        }
+
+        public override void Initialize()
+        {
+                base.Initialize();
+            //get camera
+
         }
 
         public override void Update(GameTime i_GameTime)
@@ -59,15 +55,9 @@ namespace Svivonim.ObjectModel
 
         public override void Draw(GameTime i_GameTime)
         {
+            m_BasicEffect.World = m_WorldMatrix;
 
-            if (!m_HasOwnEffect)
-            {
-                m_Effect = Game.Services.GetService(typeof(BasicEffect)) as BasicEffect;
-            }
-
-            Effect.World = m_WorldMatrix;
-
-            foreach (EffectPass pass in Effect.CurrentTechnique.Passes)
+            foreach (EffectPass pass in m_BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 DoDraw(i_GameTime);
