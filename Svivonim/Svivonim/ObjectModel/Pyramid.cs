@@ -7,33 +7,24 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Svivonim.ObjectModel
 {
-    class Pyramid : DrawableGameComponent
+    class Pyramid : Base3DElement
     {
-        private CameraManager m_CameraManager;
+//        private CameraManager m_CameraManager;
         private VertexPositionColor[] m_Vertices;
         private Vector3[] m_VerticesCoordinates;
         private Color m_Color = Color.Blue;
         private BasicEffect m_BasicEffect;
         private VertexPositionColor[] m_ColorVertices;
         private VertexBuffer m_VertexBuffer;
-        private IndexBuffer m_IndexBuffer;
+//        private IndexBuffer m_IndexBuffer;
         private short[] m_Indices;
-        private readonly RasterizerState r_RasterizerState = new RasterizerState();
 
 
         public Pyramid(Game game) : base(game)
         {
         }
 
-        public override void Initialize()
-        {
-
-            base.Initialize();
-            m_CameraManager = Game.Services.GetService<CameraManager>();
-        }
-
-
-        private Vector3[] createStartCoordinates()
+        protected override Vector3[] createStartCoordinates()
         {
             var cordinates = new Vector3[5];
             cordinates[0] = new Vector3(-1, -1, -1); //front left
@@ -45,7 +36,7 @@ namespace Svivonim.ObjectModel
         }
 
 
-        private VertexPositionColor[] createColorVertices()
+        protected virtual VertexPositionColor[] createColorVertices()
         {
             var textureVerticale = new VertexPositionColor[5];
             textureVerticale[0] = new VertexPositionColor(m_VerticesCoordinates[0], m_Color);
@@ -57,46 +48,31 @@ namespace Svivonim.ObjectModel
             return textureVerticale;
         }
 
-
-        private short[] createColorIndices()
+        protected override short[] createIndicesMapping()
         {
-            short[] textureIndices = new short[12];
+            short[] indices = new short[12];
             // Front face
-            textureIndices[0] = 1;
-            textureIndices[1] = 0;
-            textureIndices[2] = 4;
+            indices[0] = 1;
+            indices[1] = 0;
+            indices[2] = 4;
 
             // back
-            textureIndices[3] = 2;
-            textureIndices[4] = 3;
-            textureIndices[5] = 4;
+            indices[3] = 2;
+            indices[4] = 3;
+            indices[5] = 4;
 
             // right
-            textureIndices[6] = 3;
-            textureIndices[7] = 1;
-            textureIndices[8] = 4;
+            indices[6] = 3;
+            indices[7] = 1;
+            indices[8] = 4;
             
             //left
-            textureIndices[9] = 0;
-            textureIndices[10] = 2;
-            textureIndices[11] = 4;
+            indices[9] = 0;
+            indices[10] = 2;
+            indices[11] = 4;
 
-            return textureIndices;
+            return indices;
         }
-
-
-        protected override void UnloadContent()
-        {
-            if (m_BasicEffect != null)
-            {
-                m_BasicEffect.Dispose();
-                m_BasicEffect = null;
-
-                m_VertexBuffer.Dispose();
-            }
-        }
-
-
 
         protected override void LoadContent()
         {
@@ -110,10 +86,9 @@ namespace Svivonim.ObjectModel
 
             m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionColor), m_ColorVertices.Length, BufferUsage.WriteOnly);
 
-            m_Indices = createColorIndices();
+            m_Indices = createIndicesMapping();
 
             m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
-
         }
 
 
@@ -128,9 +103,7 @@ namespace Svivonim.ObjectModel
             m_BasicEffect.GraphicsDevice.Indices = m_IndexBuffer;
             m_BasicEffect.GraphicsDevice.SetVertexBuffer(m_VertexBuffer);
             m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
-
-
-            m_BasicEffect.World = Matrix.Identity;
+            m_BasicEffect.World = m_WorldMatrix;
 
 
             foreach (var pass in m_BasicEffect.CurrentTechnique.Passes)
@@ -143,10 +116,5 @@ namespace Svivonim.ObjectModel
 
             base.Draw(i_GameTime);
         }
-
-
-
-
-
     }
 }

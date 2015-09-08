@@ -5,31 +5,67 @@ namespace Svivonim.ObjectModel
 {
     abstract class Base3DElement : DrawableGameComponent
     {
-
-        protected Vector3 m_Position = Vector3.Zero;
-        protected Vector3 m_Rotations = Vector3.Zero;
-        protected Vector3 m_Scales = Vector3.One;
+        protected CameraManager m_CameraManager;
+        private Vector3 m_Position = Vector3.Zero;
+        private Vector3 m_Rotations = Vector3.Zero;
+        private Vector3 m_Scales = Vector3.One;
         protected Matrix m_WorldMatrix = Matrix.Identity;
         protected BasicEffect m_BasicEffect;
+        protected VertexBuffer m_VertexBuffer;
+        protected IndexBuffer m_IndexBuffer;
+        protected Vector3[] m_VerticesCoordinates;
+        protected readonly RasterizerState r_RasterizerState = new RasterizerState();
 
-        public bool SpinEnabled { get; set; }
+
+
+
+
+        public virtual bool SpinEnabled { get; set; }
 
         private float m_RotationsPerSecond;
-        public float RotationsPerSecond
+        public virtual float RotationsPerSecond
         {
             get { return m_RotationsPerSecond; }
             set { m_RotationsPerSecond = value; }
         }
 
-        protected Base3DElement(Game i_Game) : base(i_Game)
+        public virtual Vector3 Position
         {
+            get { return m_Position; }
+            set { m_Position = value; }
         }
+
+        protected virtual Vector3 Rotations
+        {
+            get { return m_Rotations; }
+            set { m_Rotations = value; }
+        }
+
+        public virtual Vector3 Scales
+        {
+            get { return m_Scales; }
+            set { m_Scales = value; }
+        }
+
+        protected Base3DElement(Game i_Game) : base(i_Game)
+        { }
 
         public override void Initialize()
         {
-                base.Initialize();
-            //get camera
+            base.Initialize();
+            r_RasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
+            m_CameraManager = Game.Services.GetService<CameraManager>();
+        }
 
+        protected override void UnloadContent()
+        {
+            if (m_BasicEffect != null)
+            {
+                m_BasicEffect.Dispose();
+                m_BasicEffect = null;
+
+                m_VertexBuffer.Dispose();
+            }
         }
 
         public override void Update(GameTime i_GameTime)
@@ -38,6 +74,7 @@ namespace Svivonim.ObjectModel
 
             if (SpinEnabled)
             {
+                
                 m_Rotations.Y += (float)i_GameTime.ElapsedGameTime.TotalSeconds * m_RotationsPerSecond;
             }
 
@@ -51,19 +88,10 @@ namespace Svivonim.ObjectModel
         }
 
 
-        protected abstract void DoDraw(GameTime i_GameTime);
+        
 
-        public override void Draw(GameTime i_GameTime)
-        {
-            m_BasicEffect.World = m_WorldMatrix;
+        protected abstract Vector3[] createStartCoordinates();
 
-            foreach (EffectPass pass in m_BasicEffect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                DoDraw(i_GameTime);
-            }
-            
-            base.Draw(i_GameTime);
-        }
+        protected abstract short[] createIndicesMapping();
     }
 }

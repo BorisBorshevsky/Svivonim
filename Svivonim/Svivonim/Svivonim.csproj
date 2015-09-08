@@ -40,11 +40,14 @@
   <ItemGroup>
     <None Include="Svivonim.cs.old" />
     <Compile Include="DradelGame.cs" />
+    <Compile Include="GameLogic.cs" />
     <Compile Include="ObjectModel\Base3DElement.cs" />
-    <None Include="ObjectModel\Box.cs.old" />
+    <Compile Include="ObjectModel\Box.cs" />
     <Compile Include="ObjectModel\CameraManager.cs" />
     <Compile Include="ObjectModel\Composite3DComponent.cs" />
+    <Compile Include="ObjectModel\Dradel.cs" />
     <Compile Include="ObjectModel\Pyramid.cs" />
+    <Compile Include="ObjectModel\Stick.cs" />
     <Compile Include="ObjectModel\TextureBox.cs" />
     <Content Include="ObjectModel\Structured\BaseDrawableComponent.cs.txt" />
     <Content Include="ObjectModel\Structured\Box.cs.txt" />
