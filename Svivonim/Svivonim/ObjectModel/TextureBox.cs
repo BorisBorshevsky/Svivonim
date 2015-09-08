@@ -22,12 +22,12 @@ namespace Svivonim.ObjectModel
         private IndexBuffer m_IndexBuffer;
         private readonly RasterizerState r_RasterizerState = new RasterizerState();
 
-        protected const float k_ZFactorWidth = 3;
-        protected const float k_ZFactorCoordinate = -3f;
-        protected const float k_MinXCoordinate = -3;
-        protected const float k_MaxXCoordinate = 3;
-        protected const float k_MinYCoordinate = -3;
-        protected const float k_MaxYCoordinate = 3;
+        protected const float k_MaxZCoordinate = 1;
+        protected const float k_MinZCoordinate = -1f;
+        protected const float k_MinXCoordinate = -1;
+        protected const float k_MaxXCoordinate = 1;
+        protected const float k_MinYCoordinate = -1;
+        protected const float k_MaxYCoordinate = 1;
         protected readonly Color r_UpDownColor = Color.BurlyWood;
         private VertexPositionTexture[] m_TextureVertices;
         private Vector3[] m_VerticesCoordinates;
@@ -46,104 +46,41 @@ namespace Svivonim.ObjectModel
             m_CameraManager = Game.Services.GetService<CameraManager>();
         }
 
-        /*protected override void LoadContent()
-        {
-            base.LoadContent();
-            m_Texture = Game.Content.Load<Texture2D>(@"Textures2D/dradelTextures");
-
-            m_BasicEffect = new BasicEffect(this.GraphicsDevice);
-            m_BasicEffect.Texture = m_Texture;
-            m_BasicEffect.TextureEnabled = true;
-
-            m_Vertices = new VertexPositionTexture[8];
-            m_Vertices[0] = new VertexPositionTexture(new Vector3(-1, -1, -1), new Vector2(0, 0));
-            m_Vertices[1] = new VertexPositionTexture(new Vector3(-1, 1, -1), new Vector2(0, 0.5f));
-            m_Vertices[2] = new VertexPositionTexture(new Vector3(1, -1, -1), new Vector2(0.5f, 0));
-            m_Vertices[3] = new VertexPositionTexture(new Vector3(1, 1, -1), new Vector2(0.5f, 0.5f));
-            
-            m_Vertices[4] = new VertexPositionTexture(new Vector3(-1, -1, 1), new Vector2(1, 1));
-            m_Vertices[5] = new VertexPositionTexture(new Vector3(-1, 1, 1), new Vector2(1, 0.5f));
-            m_Vertices[6] = new VertexPositionTexture(new Vector3(1, -1, 1), new Vector2(0.5f, 1));
-            m_Vertices[7] = new VertexPositionTexture(new Vector3(1, 1, 1), new Vector2(0.5f, 0.5f));
-
-
-            m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionTexture), m_Vertices.Length, BufferUsage.WriteOnly);
-            m_VertexBuffer.SetData(m_Vertices, 0, m_Vertices.Length);
-
-            m_Indices = new short[12];
-            
-            //front
-            // first triangle:
-            m_Indices[0] = 2;
-            m_Indices[1] = 1;
-            m_Indices[2] = 0;
-            // second triangle:
-            m_Indices[3] = 3;
-            m_Indices[4] = 2;
-            m_Indices[5] = 1;
-
-            //back
-            m_Indices[6] = 6;
-            m_Indices[7] = 5;
-            m_Indices[8] = 4;
-            // second triangle:
-            m_Indices[9] = 7;
-            m_Indices[10] = 6;
-            m_Indices[11] = 5;
-
-            //left
-            m_Indices[12] = 6;
-            m_Indices[13] = 5;
-            m_Indices[14] = 4;
-            // second triangle:
-            m_Indices[15] = 7;
-            m_Indices[16] = 6;
-            m_Indices[17] = 5;
-
-
-
-            m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
-            m_IndexBuffer.SetData(m_Indices);
-
-            r_RasterizerState.CullMode = CullMode.None;
-
-
-        }*/
 
         private short[] createTextureIndices()
         {
             short[] textureIndices = new short[30];
             // Front face
-            textureIndices[0] = 0;
+            textureIndices[0] = 2;
             textureIndices[1] = 1;
-            textureIndices[2] = 2;
+            textureIndices[2] = 0;
             textureIndices[3] = 0;
-            textureIndices[4] = 2;
-            textureIndices[5] = 3;
+            textureIndices[4] = 3;
+            textureIndices[5] = 2;
 
             // Back face
-            textureIndices[6] = 4;
+            textureIndices[6] = 6;
             textureIndices[7] = 5;
-            textureIndices[8] = 6;
+            textureIndices[8] = 4;
             textureIndices[9] = 4;
-            textureIndices[10] = 6;
-            textureIndices[11] = 7;
+            textureIndices[10] = 7;
+            textureIndices[11] = 6;
 
             // Right face
-            textureIndices[12] = 8;
+            textureIndices[12] = 10;
             textureIndices[13] = 9;
-            textureIndices[14] = 10;
+            textureIndices[14] = 8;
             textureIndices[15] = 8;
-            textureIndices[16] = 10;
-            textureIndices[17] = 11;
+            textureIndices[16] = 11;
+            textureIndices[17] = 10;
 
             // Left face
-            textureIndices[18] = 12;
+            textureIndices[18] = 14;
             textureIndices[19] = 13;
-            textureIndices[20] = 14;
+            textureIndices[20] = 12;
             textureIndices[21] = 12;
-            textureIndices[22] = 14;
-            textureIndices[23] = 15;
+            textureIndices[22] = 15;
+            textureIndices[23] = 14;
             
             // top
             textureIndices[24] = 16;
@@ -160,14 +97,14 @@ namespace Svivonim.ObjectModel
         private Vector3[] createStartCoordinates()
         {
             var cordinates = new Vector3[8];
-            cordinates[0] = new Vector3(k_MinXCoordinate, k_MinYCoordinate, k_ZFactorCoordinate);
-            cordinates[1] = new Vector3(k_MinXCoordinate, k_MaxYCoordinate, k_ZFactorCoordinate);
-            cordinates[2] = new Vector3(k_MaxXCoordinate, k_MaxYCoordinate, k_ZFactorCoordinate);
-            cordinates[3] = new Vector3(k_MaxXCoordinate, k_MinYCoordinate, k_ZFactorCoordinate);
-            cordinates[4] = new Vector3(k_MaxXCoordinate, k_MinYCoordinate, k_ZFactorWidth);
-            cordinates[5] = new Vector3(k_MaxXCoordinate, k_MaxYCoordinate, k_ZFactorWidth);
-            cordinates[6] = new Vector3(k_MinXCoordinate, k_MaxYCoordinate, k_ZFactorWidth);
-            cordinates[7] = new Vector3(k_MinXCoordinate, k_MinYCoordinate, k_ZFactorWidth);
+            cordinates[0] = new Vector3(k_MinXCoordinate, k_MinYCoordinate, k_MinZCoordinate); //bottom left front
+            cordinates[1] = new Vector3(k_MinXCoordinate, k_MaxYCoordinate, k_MinZCoordinate); //top left front
+            cordinates[2] = new Vector3(k_MaxXCoordinate, k_MaxYCoordinate, k_MinZCoordinate); //top right front
+            cordinates[3] = new Vector3(k_MaxXCoordinate, k_MinYCoordinate, k_MinZCoordinate); //bottom right front
+            cordinates[4] = new Vector3(k_MaxXCoordinate, k_MinYCoordinate, k_MaxZCoordinate); //bottom right back
+            cordinates[5] = new Vector3(k_MaxXCoordinate, k_MaxYCoordinate, k_MaxZCoordinate); //top right back
+            cordinates[6] = new Vector3(k_MinXCoordinate, k_MaxYCoordinate, k_MaxZCoordinate); //top left back
+            cordinates[7] = new Vector3(k_MinXCoordinate, k_MinYCoordinate, k_MaxZCoordinate); //bottom left back
             return cordinates;
         }
 
@@ -175,28 +112,28 @@ namespace Svivonim.ObjectModel
         {
             var textureVerticale = new VertexPositionTexture[20];
             // Create front vertices
-            textureVerticale[0] = new VertexPositionTexture(m_VerticesCoordinates[0], new Vector2(0, .5f));
-            textureVerticale[1] = new VertexPositionTexture(m_VerticesCoordinates[1], new Vector2(0, 0));
-            textureVerticale[2] = new VertexPositionTexture(m_VerticesCoordinates[2], new Vector2(.5f, 0));
-            textureVerticale[3] = new VertexPositionTexture(m_VerticesCoordinates[3], new Vector2(.5f, .5f));
+            textureVerticale[0] = new VertexPositionTexture(m_VerticesCoordinates[0], new Vector2(.5f, .5f));
+            textureVerticale[1] = new VertexPositionTexture(m_VerticesCoordinates[1], new Vector2(0.5f, 0));
+            textureVerticale[2] = new VertexPositionTexture(m_VerticesCoordinates[2], new Vector2(0, 0));
+            textureVerticale[3] = new VertexPositionTexture(m_VerticesCoordinates[3], new Vector2(0, .5f));
 
             // Creating the back side
-            textureVerticale[4] = new VertexPositionTexture(m_VerticesCoordinates[4], new Vector2(0, 1));
-            textureVerticale[5] = new VertexPositionTexture(m_VerticesCoordinates[5], new Vector2(0, .5f));
-            textureVerticale[6] = new VertexPositionTexture(m_VerticesCoordinates[6], new Vector2(.5f, .5f));
-            textureVerticale[7] = new VertexPositionTexture(m_VerticesCoordinates[7], new Vector2(.5f, 1));
+            textureVerticale[4] = new VertexPositionTexture(m_VerticesCoordinates[4], new Vector2(0.5f, 1));
+            textureVerticale[5] = new VertexPositionTexture(m_VerticesCoordinates[5], new Vector2(0.5f, .5f));
+            textureVerticale[6] = new VertexPositionTexture(m_VerticesCoordinates[6], new Vector2(0, .5f));
+            textureVerticale[7] = new VertexPositionTexture(m_VerticesCoordinates[7], new Vector2(0, 1));
 
             // Creating the right side
-            textureVerticale[8] = new VertexPositionTexture(m_VerticesCoordinates[3], new Vector2(.5f, 1));
-            textureVerticale[9] = new VertexPositionTexture(m_VerticesCoordinates[2], new Vector2(.5f, .5f));
-            textureVerticale[10] = new VertexPositionTexture(m_VerticesCoordinates[5], new Vector2(1, .5f));
-            textureVerticale[11] = new VertexPositionTexture(m_VerticesCoordinates[4], new Vector2(1, 1));
+            textureVerticale[8] = new VertexPositionTexture(m_VerticesCoordinates[3], new Vector2(1, 1));
+            textureVerticale[9] = new VertexPositionTexture(m_VerticesCoordinates[2], new Vector2(1, .5f));
+            textureVerticale[10] = new VertexPositionTexture(m_VerticesCoordinates[5], new Vector2(.5f, .5f));
+            textureVerticale[11] = new VertexPositionTexture(m_VerticesCoordinates[4], new Vector2(0.5f, 1));
 
             // Creating the left side
-            textureVerticale[12] = new VertexPositionTexture(m_VerticesCoordinates[7], new Vector2(.5f, .5f));
-            textureVerticale[13] = new VertexPositionTexture(m_VerticesCoordinates[6], new Vector2(.5f, 0));
-            textureVerticale[14] = new VertexPositionTexture(m_VerticesCoordinates[1], new Vector2(1, 0));
-            textureVerticale[15] = new VertexPositionTexture(m_VerticesCoordinates[0], new Vector2(1, .5f));
+            textureVerticale[12] = new VertexPositionTexture(m_VerticesCoordinates[7], new Vector2(1, .5f));
+            textureVerticale[13] = new VertexPositionTexture(m_VerticesCoordinates[6], new Vector2(1, 0));
+            textureVerticale[14] = new VertexPositionTexture(m_VerticesCoordinates[1], new Vector2(.5f, 0));
+            textureVerticale[15] = new VertexPositionTexture(m_VerticesCoordinates[0], new Vector2(0.5f, .5f));
 
             //top
             textureVerticale[16] = new VertexPositionTexture(m_VerticesCoordinates[1], new Vector2(0,0));
@@ -209,27 +146,6 @@ namespace Svivonim.ObjectModel
         }
 
 
-//        private short[] createColorIndices()
-//        {
-//            short[] colorIndices = new short[12];
-//            // Top face
-//            colorIndices[0] = 0;
-//            colorIndices[1] = 1;
-//            colorIndices[2] = 2;
-//            colorIndices[3] = 0;
-//            colorIndices[4] = 2;
-//            colorIndices[5] = 3;
-//
-//            // Bottom face
-//            colorIndices[6] = 4;
-//            colorIndices[7] = 5;
-//            colorIndices[8] = 6;
-//            colorIndices[9] = 4;
-//            colorIndices[10] = 6;
-//            colorIndices[11] = 7;
-//
-//            return colorIndices;
-//        }
 
         protected override void LoadContent()
         {
@@ -245,13 +161,12 @@ namespace Svivonim.ObjectModel
 
             m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionTexture), m_TextureVertices.Length, BufferUsage.WriteOnly);
 
-//            m_ColorIndeces = createColorIndices();
             m_Indices = createTextureIndices();
 
             m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
            
 
-            r_RasterizerState.CullMode = CullMode.None;
+//            r_RasterizerState.CullMode = CullMode.None;
         }
 
         protected override void UnloadContent()

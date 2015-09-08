@@ -32,6 +32,11 @@ namespace Svivonim
             var a = new TextureBox(this, Vector3.Zero);
 
             Components.Add(a);
+
+
+            var b = new Pyramid(this);
+
+            Components.Add(b);
         }
 
         protected override void Initialize()

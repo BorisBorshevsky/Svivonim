@@ -44,6 +44,7 @@
     <None Include="ObjectModel\Box.cs.old" />
     <Compile Include="ObjectModel\CameraManager.cs" />
     <Compile Include="ObjectModel\Composite3DComponent.cs" />
+    <Compile Include="ObjectModel\Pyramid.cs" />
     <Compile Include="ObjectModel\TextureBox.cs" />
     <Content Include="ObjectModel\Structured\BaseDrawableComponent.cs.txt" />
     <Content Include="ObjectModel\Structured\Box.cs.txt" />
