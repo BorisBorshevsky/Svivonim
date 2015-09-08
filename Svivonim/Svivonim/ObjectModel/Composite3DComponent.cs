@@ -19,10 +19,11 @@ namespace Svivonim.ObjectModel
             if (!r_Components.Contains(i_Element))
             {
                 r_Components.Add(i_Element);
-//                i_Element.Rotations = Rotations;
-//                i_Drawable.Scales = Scales;
-//                i_Drawable.Position = Position;
-//                i_Drawable.SpinComponent = SpinComponent;
+                i_Element.Initialize();
+                i_Element.RotationsPerSecond = RotationsPerSecond;
+                i_Element.Scales = Scales;
+                i_Element.Position = Position;
+                i_Element.SpinEnabled = SpinEnabled;
 
             }
         }
@@ -42,6 +43,16 @@ namespace Svivonim.ObjectModel
             r_Components.ForEach(i_Element => i_Element.Update(gameTime));
         }
 
+        protected override Vector3[] createStartCoordinates()
+        {
+            throw new InvalidOperationException();
+        }
+
+        protected override short[] createIndicesMapping()
+        {
+            throw new InvalidOperationException();
+        }
+
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
@@ -49,10 +60,61 @@ namespace Svivonim.ObjectModel
             r_Components.ForEach(i_Element => i_Element.Draw(gameTime));
         }
 
-
-        protected override void DoDraw(GameTime i_GameTime)
+        public override bool SpinEnabled
         {
-            //do nothing
+            set
+            {
+                base.SpinEnabled = value;
+                foreach (var comp in r_Components)
+                {
+                    comp.SpinEnabled = value;
+                }
+            }
         }
+
+        public override float RotationsPerSecond
+        {
+            set
+            {
+                base.RotationsPerSecond = value;
+                foreach (var comp in r_Components)
+                {
+                    comp.RotationsPerSecond = value;
+                }
+            }
+            get { return base.RotationsPerSecond; }
+        }
+
+        public override Vector3 Position
+        {
+            set
+            {
+                base.Position = value;
+
+                foreach (var comp in r_Components)
+                {
+                    comp.Position = value;
+                }
+            }
+            get { return base.Position; }
+        }
+
+        public override Vector3 Scales
+        {
+            set
+            {
+                base.Scales = value;
+
+                foreach (var comp in r_Components)
+                {
+                    comp.Scales = value;
+                }
+            }
+
+            get { return base.Scales; }
+        }
+
+
+    
     }
 }

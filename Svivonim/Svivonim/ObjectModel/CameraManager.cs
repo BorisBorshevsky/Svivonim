@@ -46,9 +46,9 @@ namespace Svivonim.ObjectModel
         // we want to look at the center of the 3D world:
         Vector3 m_CameraLooksAt = Vector3.Zero;
         // we are standing 80 units in front of our target:
-        Vector3 m_CameraLocation = new Vector3(0, 0, 20);
+        Vector3 m_CameraLocation = new Vector3(0, 0, -20);
         // the camera stands straight:
-        Vector3 m_CameraUpDirection = Vector3.Up;
+        Vector3 m_CameraUpDirection = new Vector3(0, 1, 0);
         private IInputManager m_InputManager;
 
         public override void Update(GameTime gameTime)
