@@ -1,23 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Svivonim.ObjectModel
+namespace Dreidels.ObjectModel
 {
     class TextureBox : Box
     {
-        private VertexPositionColor[] m_Verts;
-        private VertexBuffer m_Buffer;
-        private BasicEffect m_Effect;
         private Texture2D m_Texture;
-        private BasicEffect m_BasicEffect;
-        private VertexPositionTexture[] m_Vertices;
         private short[] m_Indices;
-        private IndexBuffer m_IndexBuffer;
-//        private readonly RasterizerState r_RasterizerState = new RasterizerState();
-
         private VertexPositionTexture[] m_TextureVertices;
-        
-
+     
         public TextureBox(Game i_Game, Vector3 i_Position)
             : base(i_Game)
         {
@@ -31,11 +22,6 @@ namespace Svivonim.ObjectModel
             m_CameraManager = Game.Services.GetService<CameraManager>();
         }
 
-
-       
-
- 
-     
         protected VertexPositionTexture[] createTextureVertices()
         {
             var textureVerticale = new VertexPositionTexture[24];
@@ -74,8 +60,6 @@ namespace Svivonim.ObjectModel
             textureVerticale[21] = new VertexPositionTexture(m_VerticesCoordinates[3], new Vector2(0, 0));
             textureVerticale[22] = new VertexPositionTexture(m_VerticesCoordinates[4], new Vector2(0, 0));
             textureVerticale[23] = new VertexPositionTexture(m_VerticesCoordinates[7], new Vector2(0, 0));
-
-
 
             return textureVerticale;
         }
@@ -131,11 +115,8 @@ namespace Svivonim.ObjectModel
             textureIndices[34] = 22;
             textureIndices[35] = 20;
 
-
             return textureIndices;
         }
-
-
 
         protected override void LoadContent()
         {
@@ -155,7 +136,6 @@ namespace Svivonim.ObjectModel
             m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
         }
 
-
         public override void Draw(GameTime i_GameTime)
         {
             m_BasicEffect.Projection = m_CameraManager.CameraSettings;
@@ -174,12 +154,9 @@ namespace Svivonim.ObjectModel
             {
                 pass.Apply();
                 m_BasicEffect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, m_VertexBuffer.VertexCount, 0, m_IndexBuffer.IndexCount / 3);
-
             }
-
 
             base.Draw(i_GameTime);
         }
-
     }
 }

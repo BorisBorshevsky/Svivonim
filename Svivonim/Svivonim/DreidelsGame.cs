@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Dreidels.ObjectModel;
 using Infrastructure.Managers;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Svivonim.ObjectModel;
 
-namespace Svivonim
+namespace Dreidels
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class DradelGame : Game
+    public class DreidelsGame : Game
     {
         GraphicsDeviceManager graphics;
 
@@ -22,7 +18,7 @@ namespace Svivonim
         private GameLogic r_GameLogic;
 
 
-        public DradelGame()
+        public DreidelsGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";

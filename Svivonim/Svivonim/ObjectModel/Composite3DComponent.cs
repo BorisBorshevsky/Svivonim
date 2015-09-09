@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 
-namespace Svivonim.ObjectModel
+namespace Dreidels.ObjectModel
 {
     class Composite3DComponent : Base3DElement
     {

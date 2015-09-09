@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Svivonim.ObjectModel
+namespace Dreidels.ObjectModel
 {
     abstract class Base3DElement : DrawableGameComponent
     {
@@ -15,10 +15,6 @@ namespace Svivonim.ObjectModel
         protected IndexBuffer m_IndexBuffer;
         protected Vector3[] m_VerticesCoordinates;
         protected readonly RasterizerState r_RasterizerState = new RasterizerState();
-
-
-
-
 
         public virtual bool SpinEnabled { get; set; }
 
@@ -53,7 +49,7 @@ namespace Svivonim.ObjectModel
         public override void Initialize()
         {
             base.Initialize();
-            r_RasterizerState.CullMode = CullMode.CullCounterClockwiseFace;
+            r_RasterizerState.CullMode = CullMode.CullCounterClockwiseFace; //TODO: change back to CullCounterClockwiseFace
             m_CameraManager = Game.Services.GetService<CameraManager>();
         }
 
@@ -87,11 +83,11 @@ namespace Svivonim.ObjectModel
                 Matrix.CreateTranslation(m_Position);
         }
 
-
-        
-
         protected abstract Vector3[] createStartCoordinates();
 
-        protected abstract short[] createIndicesMapping();
+        protected virtual short[] createIndicesMapping()
+        {
+            return new short[0];
+        }
     }
 }

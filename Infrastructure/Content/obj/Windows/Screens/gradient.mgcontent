@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Tools/VS13Workspace/Hit/XNA/Svivonim/Infrastructure/Content/Screens/gradient.png</SourceFile>
-  <SourceTime>2011-02-12T18:13:08+02:00</SourceTime>
-  <DestFile>C:/Tools/VS13Workspace/Hit/XNA/Svivonim/Infrastructure/Content/bin/Windows/Screens/gradient.xnb</DestFile>
-  <DestTime>2015-09-06T10:56:03.0249629+03:00</DestTime>
+  <SourceFile>C:/Users/Administrator/Source/Repos/Svivonim/Infrastructure/Content/Screens/gradient.png</SourceFile>
+  <SourceTime>2015-09-08T13:15:30.7435936+03:00</SourceTime>
+  <DestFile>C:/Users/Administrator/Source/Repos/Svivonim/Infrastructure/Content/bin/Windows/Screens/gradient.xnb</DestFile>
+  <DestTime>2015-09-09T18:01:44.5077924+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T20:14:44+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Svivonim
+namespace Dreidels
 {
 #if WINDOWS || LINUX
     /// <summary>
@@ -14,7 +14,7 @@ namespace Svivonim
         [STAThread]
         static void Main()
         {
-            using (var game = new DradelGame())
+            using (var game = new DreidelsGame())
                 game.Run();
         }
     }

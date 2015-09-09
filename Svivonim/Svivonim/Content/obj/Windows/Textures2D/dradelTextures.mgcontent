@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Tools/VS13Workspace/Hit/XNA/Svivonim/Svivonim/Svivonim/Content/Textures2D/dradelTextures.png</SourceFile>
-  <SourceTime>2015-09-06T22:45:47.7012659+03:00</SourceTime>
-  <DestFile>C:/Tools/VS13Workspace/Hit/XNA/Svivonim/Svivonim/Svivonim/Content/bin/Windows/Textures2D/dradelTextures.xnb</DestFile>
-  <DestTime>2015-09-06T22:47:00.7139439+03:00</DestTime>
+  <SourceFile>C:/Users/Administrator/Source/Repos/Svivonim/Svivonim/Svivonim/Content/Textures2D/dradelTextures.png</SourceFile>
+  <SourceTime>2015-09-08T14:16:09.4509092+03:00</SourceTime>
+  <DestFile>C:/Users/Administrator/Source/Repos/Svivonim/Svivonim/Svivonim/Content/bin/Windows/Textures2D/dradelTextures.xnb</DestFile>
+  <DestTime>2015-09-09T18:01:44.9840011+03:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T20:14:44+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
