@@ -1,11 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Dreidels.ObjectModel.Structured;
+using Microsoft.Xna.Framework;
 
 namespace Dreidels.ObjectModel
 {
-    abstract class Box : Base3DElement
+    abstract class Box : Composite3DComponent
     {
         protected Vector3 Position = Vector3.Zero;
         protected Vector3 Scale = Vector3.One;
+        protected short[] m_Indices;
+
 
         protected const float k_MaxZCoordinate = 1;
         protected const float k_MinZCoordinate = -1f;
@@ -14,12 +17,15 @@ namespace Dreidels.ObjectModel
         protected const float k_MinYCoordinate = -1;
         protected const float k_MaxYCoordinate = 1;
 
-        protected Box(Game i_Game )
+        protected Box(Game i_Game)
             : base(i_Game)
         {
+            this.Add(new SideWall(i_Game, Vector3.One, new Vector3(0, 1, 0), true));
+            this.Add(new SideWall(i_Game, Vector3.One, new Vector3(0, -1, 0)));
         }
 
-        protected Box(Game i_Game, Vector3 Position) : this(i_Game)
+        protected Box(Game i_Game, Vector3 Position)
+            : this(i_Game)
         {
             this.Position = Position;
         }

@@ -34,7 +34,6 @@ namespace Dreidels.ObjectModel
 
             m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
 
-            //r_RasterizerState.CullMode = CullMode.None;
         }
 
 
@@ -46,15 +45,6 @@ namespace Dreidels.ObjectModel
                 textureVerticale[i] = new VertexPositionColor(m_VerticesCoordinates[i], m_Color); 
             }
             
-                //bottom left front
-                //top left front
-                //top right front
-                //bottom right front
-                //bottom right back
-                //top right back
-                //top left back
-                //bottom left back
-
             return textureVerticale;
         }
 

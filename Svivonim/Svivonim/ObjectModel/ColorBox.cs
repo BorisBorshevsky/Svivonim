@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using Dreidels.ObjectModel.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -6,10 +8,6 @@ namespace Dreidels.ObjectModel
 {
     class ColorBox : Box
     {
-        private Texture2D m_Texture;
-        private short[] m_Indices;
-        private VertexPositionTexture[] m_TextureVertices;
-     
         public ColorBox(Game i_Game, Vector3 i_Position)
             : base(i_Game)
         {
@@ -32,164 +30,166 @@ namespace Dreidels.ObjectModel
 
             m_Vertices = new List<VertexPositionColor>();
  
-            CreateWalls();
+            createWalls();
             createHeiLetter();
             createNonLetter();
             createPeiLetter();
             createGimel();
         }
 
-        private void createHeiLetter()
+        private void createHeiLetter() // BACK
         {
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.25f, -0.5f, 1f), Color.Black));
-
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.25f, -0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.25f, 0, 1f), Color.Black));
-                      
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.25f, 1f), Color.Black));
-                      
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.25f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.25f, 1f), Color.Black));
-                      
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.25f, -0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.25f, 0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.5f, 1f), Color.Black));
-                      
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.25f, 0.5f, 1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.5f, 1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, -0.5f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, -0.5f, -0.3f), Color.Black));
+                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, -0.5f, -0.3f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0, -0.3f), Color.Black));
+                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.5f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.5f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.3f, -0.5f), Color.Black));
+                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.3f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.5f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.3f, 0.5f), Color.Black));
+                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, -0.5f, 0.3f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.5f, 0.3f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, -0.5f, 0.5f), Color.Black));
+                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, -0.5f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.5f, 0.3f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-1.001f, 0.5f, 0.5f), Color.Black));
         }
 
-        private void createNonLetter()
+        private void createNonLetter() //LEFT
         {
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.25f, 0.25f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.25f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.5f, 0.25f), Color.Black));
-            
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.5f, 0.25f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.25f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.5f, -0.5f), Color.Black));
-            
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.5f, -0.25f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.5f, -0.25f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.5f, -0.5f), Color.Black));
-            
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, -0.5f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.5f, -0.25f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.5f, -0.5f), Color.Black));
-            
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.5f, 0), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.5f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.25f, 0), Color.Black));
-            
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.25f, 0), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.5f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(1f, 0.25f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3( -0.3f, -0.2f, 1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3( 0.5f , -0.2f, 1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3( -0.3f, -0.5f, 1.001f), Color.Black));
+                                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3( -0.3f, -0.5f, 1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3( 0.5f , -0.2f, 1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3( 0.5f , -0.5f, 1.001f), Color.Black));
+                                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3( 0.3f , -0.5f, 1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.3f  , 0.5f,  1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3( 0.5f , -0.5f, 1.001f), Color.Black));
+                                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3( 0.5f , -0.5f, 1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.3f  , 0.5f,  1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f  , 0.5f,  1.001f), Color.Black));
+                                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0     , 0.5f,  1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f  , 0.5f,  1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0     , 0.2f,  1.001f), Color.Black));
+                                                                               
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0     , 0.2f,  1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f  , 0.5f,  1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f  , 0.2f,  1.001f), Color.Black));
         }
 
-        private void createPeiLetter()
+
+
+        private void createPeiLetter() //FRONT - GOOOOOD
         {
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.1f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0, 0.1f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.1f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.15f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0, 0.15f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.15f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.1f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0, 0.1f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0, -0.1f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.15f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0, 0.15f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0, -0.15f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.1f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.2f, -0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.15f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.2f, -0.65f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.2f, -0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.1f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.2f, 0.1f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.2f, -0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.15f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.2f, 0.15f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.3f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.3f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.35f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.35f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.65f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.3f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, -0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.35f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.65f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.2f, -0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.2f, 0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.2f, -0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.2f, 0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.65f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.2f, 0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, -0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.2f, 0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.65f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.3f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.3f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.35f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.35f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.65f, -1.001f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.6f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.3f, -1f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.6f, -1f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(-0.5f, 0.65f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.35f, -1.001f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(0.5f, 0.65f, -1.001f), Color.Black));
         }
 
-        private void createGimel()
+        private void createGimel() //left - GOOOD
         {
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.3f, 0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.3f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.6f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.35f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.35f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.65f, -0.5f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.6f, 0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.3f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.6f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.65f, -0.5f), Color.Black));            
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.35f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.65f, 0.5f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.1f, 0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.1f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.1f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.15f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.15f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.15f, -0.5f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.1f, 0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.1f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.1f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.15f, -0.5f), Color.Black));            
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.15f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.15f, 0.5f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.6f, 0.2f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.6f, 0.2f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.6f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.65f, -0.2f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.65f, -0.2f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.65f, -0.5f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.6f, 0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.6f, 0.2f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.6f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.65f, -0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.65f, -0.2f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.65f, -0.5f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.6f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.1f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.6f, -0.2f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.65f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.15f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.65f, 0.2f), Color.Black));
 
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, -0.6f, -0.2f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.1f, -0.5f), Color.Black));
-            m_Vertices.Add(new VertexPositionColor(new Vector3(-1f, 0.1f, -0.2f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, -0.65f, 0.2f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.15f, 0.5f), Color.Black));
+            m_Vertices.Add(new VertexPositionColor(new Vector3(1.001f, 0.15f, 0.2f), Color.Black));
         }
 
-        private void CreateWalls()
+        private void createWalls()
         {
-            //front
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.Yellow));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[1], Color.Yellow));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Yellow));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Yellow));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[3], Color.Yellow));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.Yellow));
+            //front - PEI
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.Blue));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[1], Color.Blue));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Blue));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Blue));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[3], Color.Blue));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.Blue));
             
-            //back
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Blue));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[6], Color.Blue));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.Blue));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.Blue));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[4], Color.Blue));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Blue));
+            //back Nun
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Yellow));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[6], Color.Yellow));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.Yellow));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.Yellow));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[4], Color.Yellow));
+            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Yellow));
 
-            //left
+            //left - Gimel
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.GreenYellow));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.GreenYellow));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[3], Color.GreenYellow));
@@ -197,43 +197,25 @@ namespace Dreidels.ObjectModel
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[4], Color.GreenYellow));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.GreenYellow));
 
-            //right
+            //right -- Hei
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Red));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[1], Color.Red));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[6], Color.Red));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[6], Color.Red));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Red));
             m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Red));
-
-            //top
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[6], Color.White));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[1], Color.White));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.White));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[2], Color.White));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[5], Color.White));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[6], Color.White));
-
-            //bottom
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[3], Color.Black));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[0], Color.Black));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Black));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[7], Color.Black));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[4], Color.Black));
-            m_Vertices.Add(new VertexPositionColor(m_VerticesCoordinates[3], Color.Black));
         }
 
         public override void Draw(GameTime i_GameTime)
         {
             m_BasicEffect.Projection = m_CameraManager.CameraSettings;
             m_BasicEffect.View = m_CameraManager.CameraState;
-            m_BasicEffect.World = m_WorldMatrix;// * Matrix.CreateRotationY(m_RotationY += (float)i_GameTime.ElapsedGameTime.TotalSeconds * 10);
+            m_BasicEffect.World = m_WorldMatrix;
 
             foreach (EffectPass pass in m_BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-
-                this.GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(
-                    PrimitiveType.TriangleList, m_Vertices.ToArray(), 0, m_Vertices.Count/3);
+                this.GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleList, m_Vertices.ToArray(), 0, m_Vertices.Count / 3);
             }
 
             base.Draw(i_GameTime);

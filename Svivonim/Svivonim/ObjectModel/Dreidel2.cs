@@ -2,12 +2,12 @@
 
 namespace Dreidels.ObjectModel
 {
-    class Dreidel1 : DreidelBase
+    class Dreidel2 : DreidelBase
     {
-        public Dreidel1(Game i_Game, Vector3 i_Position)
+        public Dreidel2(Game i_Game, Vector3 i_Position)
             : base(i_Game, i_Position)
         {
-            m_Body = new ColorBox(i_Game, Vector3.Zero);
+            m_Body = new TextureBoxStrip(i_Game, Vector3.Zero);
             Add(m_Body);
 
         }

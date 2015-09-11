@@ -3,14 +3,15 @@ using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Dreidels.ObjectModel
+namespace Dreidels.ObjectModel.Services
 {
-    class CameraManager : GameService
+    class CameraManager : GameService , ICameraManager
+
     {
-        float k_NearPlaneDistance = 0.5f;
-        float k_FarPlaneDistance = 1000.0f;
-        float k_ViewAngle = MathHelper.PiOver4;
-        private float k_MovementSpeed = 20;
+        private const float k_NearPlaneDistance = 0.5f;
+        private const float k_FarPlaneDistance = 1000.0f;
+        private const float k_ViewAngle = MathHelper.PiOver4;
+        private const float k_MovementSpeed = 20;
 
         
         public CameraManager(Game i_Game)

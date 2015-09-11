@@ -3,20 +3,19 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Dreidels.ObjectModel
 {
-    class Pyramid : Base3DElement
+    class Pyramid : Composite3DComponent
     {
-//        private CameraManager m_CameraManager;
-        private VertexPositionColor[] m_Vertices;
-        private Vector3[] m_VerticesCoordinates;
+//        private VertexPositionColor[] m_Vertices;
+//        private Vector3[] m_VerticesCoordinates;
         private Color m_Color = Color.Blue;
-        private BasicEffect m_BasicEffect;
+//        private BasicEffect m_BasicEffect;
         private VertexPositionColor[] m_ColorVertices;
-        private VertexBuffer m_VertexBuffer;
-//        private IndexBuffer m_IndexBuffer;
+//        private VertexBuffer m_VertexBuffer;
         private short[] m_Indices;
 
 
-        public Pyramid(Game game) : base(game)
+        public Pyramid(Game game)
+            : base(game)
         {
         }
 
@@ -61,7 +60,7 @@ namespace Dreidels.ObjectModel
             indices[6] = 3;
             indices[7] = 1;
             indices[8] = 4;
-            
+
             //left
             indices[9] = 0;
             indices[10] = 2;

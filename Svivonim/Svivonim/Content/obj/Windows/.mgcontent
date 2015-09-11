@@ -4,6 +4,7 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Administrator/Source/Repos/Svivonim/Svivonim/Svivonim/Content/Textures2D/dradelTextures.png</File>
+    <File>C:/Tools/VS13Workspace/Hit/XNA/Svivonim/Svivonim/Svivonim/Content/Textures2D/dradelTextures.png</File>
+    <File>C:/Tools/VS13Workspace/Hit/XNA/Svivonim/Svivonim/Svivonim/Content/Textures2D/linedTexture.png</File>
   </SourceFiles>
 </SourceFileCollection>

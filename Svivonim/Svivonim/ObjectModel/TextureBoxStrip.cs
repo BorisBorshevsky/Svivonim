@@ -4,16 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Dreidels.ObjectModel
 {
-    class TextureBox : Box
+    class TextureBoxStrip : Box
     {
         private Texture2D m_Texture;
-        private short[] m_Indices;
         private VertexPositionTexture[] m_TextureVertices;
-     
-        public TextureBox(Game i_Game, Vector3 i_Position)
+
+        public TextureBoxStrip(Game i_Game, Vector3 i_Position)
             : base(i_Game)
         {
-            ((Base3DElement) this).Position = i_Position;
+            Position = i_Position;
         }
 
         public override void Initialize()
@@ -26,7 +25,6 @@ namespace Dreidels.ObjectModel
         protected VertexPositionTexture[] CreateTextureVertices()
         {
             var textureVerticale = new VertexPositionTexture[10];
-            // Create front vertices
             textureVerticale[0] = new VertexPositionTexture(new Vector3(-1, -1, 1), new Vector2(0, 1f));
             textureVerticale[1] = new VertexPositionTexture(new Vector3(-1, 1, 1), new Vector2(0, 0));
             textureVerticale[2] = new VertexPositionTexture(new Vector3(1, -1, 1), new Vector2(0.25f, 1));
@@ -41,44 +39,6 @@ namespace Dreidels.ObjectModel
             return textureVerticale;
         }
 
-        protected override short[] createIndicesMapping()
-        {
-            short[] textureIndices = new short[24];
-            // Back face ++
-            textureIndices[0] = 0;
-            textureIndices[1] = 1;
-            textureIndices[2] = 2;
-            textureIndices[3] = 3;
-            textureIndices[4] = 2;
-            textureIndices[5] = 1;
-
-            // Back face
-            textureIndices[6] = 2;
-            textureIndices[7] = 3;
-            textureIndices[8] = 4;
-            textureIndices[9] = 5;
-            textureIndices[10] = 4;
-            textureIndices[11] = 3;
-
-            // Right face
-            textureIndices[12] = 4;
-            textureIndices[13] = 5;
-            textureIndices[14] = 6;
-            textureIndices[15] = 7;
-            textureIndices[16] = 6;
-            textureIndices[17] = 5;
-
-            // Left face
-            textureIndices[18] = 6;
-            textureIndices[19] = 7;
-            textureIndices[20] = 8;
-            textureIndices[21] = 9;
-            textureIndices[22] = 8;
-            textureIndices[23] = 7;
-
-            return textureIndices;
-        }
-
         protected override void LoadContent()
         {
             m_Texture = Game.Content.Load<Texture2D>(@"Textures2D/LinedTexture");
@@ -88,13 +48,8 @@ namespace Dreidels.ObjectModel
             m_BasicEffect.TextureEnabled = true;
 
             m_VerticesCoordinates = createStartCoordinates();
+
             m_TextureVertices = CreateTextureVertices();
-
-            m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionTexture), m_TextureVertices.Length, BufferUsage.WriteOnly);
-
-            m_Indices = createIndicesMapping();
-
-            m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
         }
 
         public override void Draw(GameTime i_GameTime)
@@ -102,11 +57,6 @@ namespace Dreidels.ObjectModel
             m_BasicEffect.Projection = m_CameraManager.CameraSettings;
             m_BasicEffect.View = m_CameraManager.CameraState;
 
-            m_IndexBuffer.SetData(m_Indices);
-            m_VertexBuffer.SetData(m_TextureVertices, 0, m_TextureVertices.Length);
-
-            m_BasicEffect.GraphicsDevice.Indices = m_IndexBuffer;
-            m_BasicEffect.GraphicsDevice.SetVertexBuffer(m_VertexBuffer);
             m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
 
             m_BasicEffect.World = m_WorldMatrix;
@@ -114,7 +64,7 @@ namespace Dreidels.ObjectModel
             foreach (var pass in m_BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                m_BasicEffect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, m_VertexBuffer.VertexCount, 0, m_IndexBuffer.IndexCount / 3);
+                m_BasicEffect.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, m_TextureVertices, 0, m_TextureVertices.Length - 2);
             }
 
             base.Draw(i_GameTime);

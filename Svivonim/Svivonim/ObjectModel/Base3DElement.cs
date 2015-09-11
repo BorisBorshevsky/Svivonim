@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Dreidels.ObjectModel.Services;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Dreidels.ObjectModel
@@ -15,6 +16,8 @@ namespace Dreidels.ObjectModel
         protected IndexBuffer m_IndexBuffer;
         protected Vector3[] m_VerticesCoordinates;
         protected readonly RasterizerState r_RasterizerState = new RasterizerState();
+
+        protected Vector3 Scale = Vector3.One;
 
         public virtual bool SpinEnabled { get; set; }
 

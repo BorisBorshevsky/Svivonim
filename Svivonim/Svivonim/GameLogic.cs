@@ -10,7 +10,7 @@ namespace Dreidels
     class GameLogic : RegisteredComponent
     {
         private IInputManager m_InputManager;
-        private readonly List<BaseDreidel> r_Dradels = new List<BaseDreidel>();
+        private readonly List<DreidelBase> r_Dradels = new List<DreidelBase>();
         private int m_SpinningDradles = 0;
        
         public GameLogic(Game i_Game) : base(i_Game)
@@ -43,6 +43,7 @@ namespace Dreidels
 
             //initialize models
             r_Dradels.Add(new Dreidel1(Game, new Vector3(-5, -5, 0)));
+            r_Dradels.Add(new Dreidel2(Game, new Vector3(0, 0, 0)));
             r_Dradels.Add(new Dreidel3(Game, new Vector3(-5, 5, 0)));
 
             r_Dradels.ForEach(dreidel => dreidel.Stopped += DreidelOnStopped);

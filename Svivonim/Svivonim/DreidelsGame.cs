@@ -1,4 +1,5 @@
 ﻿using Dreidels.ObjectModel;
+using Dreidels.ObjectModel.Services;
 using Infrastructure.Managers;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
