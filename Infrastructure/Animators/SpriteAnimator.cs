@@ -2,7 +2,7 @@
 
 using System;
 using Infrastructure.Animators.ConcreteAnimators;
-using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel2D;
 using Microsoft.Xna.Framework;
 
 namespace Infrastructure.Animators
@@ -28,11 +28,11 @@ namespace Infrastructure.Animators
             if (m_ResetAfterFinish)
             {
                 Reset();
-                this.m_IsFinished = true;
+                m_IsFinished = true;
             }
 
 
-            if (this.GetType() == typeof (ShrinkAnimator))
+            if (GetType() == typeof (ShrinkAnimator))
             {
                 
             }
@@ -68,7 +68,7 @@ namespace Infrastructure.Animators
 
         public bool IsFinite
         {
-            get { return this.m_AnimationLength != TimeSpan.Zero; }
+            get { return m_AnimationLength != TimeSpan.Zero; }
         }
 
         public bool ResetAfterFinish
@@ -112,7 +112,7 @@ namespace Infrastructure.Animators
             {
                 m_AnimationLength = i_AnimationLength;
                 TimeLeft = m_AnimationLength;
-                this.IsFinished = false;
+                IsFinished = false;
             }
 
             RevertToOriginal();
@@ -122,7 +122,7 @@ namespace Infrastructure.Animators
 
         public void Pause()
         {
-            this.Enabled = false;
+            Enabled = false;
         }
 
         public void Resume()
@@ -148,7 +148,7 @@ namespace Infrastructure.Animators
 
         public bool IsFinished
         {
-            get { return this.m_IsFinished; }
+            get { return m_IsFinished; }
             protected set
             {
                 if (value != m_IsFinished)
@@ -169,25 +169,25 @@ namespace Infrastructure.Animators
                 Initialize();
             }
 
-            if (this.GetType() != typeof(CompositeAnimator))
+            if (GetType() != typeof(CompositeAnimator))
             {
 
             }
 
-            if (this.Enabled && !this.IsFinished)
+            if (Enabled && !IsFinished)
             {
-                if (this.IsFinite)
+                if (IsFinite)
                 {
                     // check if we should stop animating:
                     TimeLeft -= i_GameTime.ElapsedGameTime;
 
                     if (TimeLeft.TotalSeconds < 0)
                     {
-                        this.IsFinished = true;
+                        IsFinished = true;
                     }
                 }
 
-                if (!this.IsFinished)
+                if (!IsFinished)
                 {
                     // we are still required to animate:
 

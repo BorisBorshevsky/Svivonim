@@ -5,7 +5,7 @@ using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace Infrastructure.ObjectModel
+namespace Infrastructure.ObjectModel2D
 {
     public abstract class LoadableDrawableComponent : DrawableGameComponent
     {
@@ -34,9 +34,9 @@ namespace Infrastructure.ObjectModel
 
         protected LoadableDrawableComponent(string i_AssetName, Game i_Game, int i_UpdateOrder, int i_DrawOrder): base(i_Game)
         {
-            this.AssetName = i_AssetName;
-            this.UpdateOrder = i_UpdateOrder;
-            this.DrawOrder = i_DrawOrder;
+            AssetName = i_AssetName;
+            UpdateOrder = i_UpdateOrder;
+            DrawOrder = i_DrawOrder;
         }
 
         protected LoadableDrawableComponent(string i_AssetName,Game i_Game,int i_CallsOrder)
@@ -50,7 +50,7 @@ namespace Infrastructure.ObjectModel
             if (this is ICollidable)
             {
                 ICollisionsManager collisionMgr =
-                    this.Game.Services.GetService(typeof(ICollisionsManager))
+                    Game.Services.GetService(typeof(ICollisionsManager))
                         as ICollisionsManager;
 
                 if (collisionMgr != null)

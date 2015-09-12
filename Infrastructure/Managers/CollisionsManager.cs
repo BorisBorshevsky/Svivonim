@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel2D;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 
@@ -19,14 +19,14 @@ namespace Infrastructure.Managers
 
         protected override void RegisterAsService()
         {
-            this.Game.Services.AddService(typeof(ICollisionsManager), this);
+            Game.Services.AddService(typeof(ICollisionsManager), this);
         }
 
         public void AddObjectToMonitor(ICollidable i_Collidable)
         {
-            if (!this.r_Collidables.Contains(i_Collidable))
+            if (!r_Collidables.Contains(i_Collidable))
             {
-                this.r_Collidables.Add(i_Collidable);
+                r_Collidables.Add(i_Collidable);
                 i_Collidable.PositionChanged += collidable_PositionChanged;
                 i_Collidable.Disposed += collidable_Disposed;
             }
@@ -70,7 +70,7 @@ namespace Infrastructure.Managers
 
             if (collidable != null
                 &&
-                this.r_Collidables.Contains(collidable))
+                r_Collidables.Contains(collidable))
             {
                 collidable.PositionChanged -= collidable_PositionChanged;
                 collidable.Disposed -= collidable_Disposed;

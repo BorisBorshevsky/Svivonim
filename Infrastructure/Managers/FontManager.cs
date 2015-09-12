@@ -1,4 +1,4 @@
-﻿using Infrastructure.ObjectModel;
+﻿using Infrastructure.ObjectModel2D;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,7 +23,7 @@ namespace Infrastructure.Managers
 
         protected override void RegisterAsService()
         {
-            this.Game.Services.AddService(typeof(IFontManager), this);
+            Game.Services.AddService(typeof(IFontManager), this);
         }
 
         public SpriteFont SpriteFont

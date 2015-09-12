@@ -22,7 +22,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Opacity = OriginalSpriteInfo.Opacity;
+            BoundSprite.Opacity = OriginalSpriteInfo.Opacity;
         }
 
         protected override void DoFrame(GameTime i_GameTime)

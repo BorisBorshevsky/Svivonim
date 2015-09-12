@@ -16,9 +16,9 @@ namespace Infrastructure.Animators.ConcreteAnimators
         public CellAnimator(TimeSpan i_CellTime, int i_NumOfCells, TimeSpan i_AnimationLength)
             : base("CelAnimation", i_AnimationLength)
         {
-            this.m_CellTime = i_CellTime;
-            this.m_TimeLeftForCell = i_CellTime;
-            this.r_NumOfCells = i_NumOfCells;
+            m_CellTime = i_CellTime;
+            m_TimeLeftForCell = i_CellTime;
+            r_NumOfCells = i_NumOfCells;
 
             m_Loop = i_AnimationLength == TimeSpan.Zero;
         }
@@ -35,14 +35,14 @@ namespace Infrastructure.Animators.ConcreteAnimators
                 else
                 {
                     m_CurrCellIdx = r_NumOfCells - 1; // lets stop at the last frame
-                    this.IsFinished = true;
+                    IsFinished = true;
                 }
             }
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.SourceRectangle = OriginalSpriteInfo.SourceRectangle;
+            BoundSprite.SourceRectangle = OriginalSpriteInfo.SourceRectangle;
         }
 
         protected override void DoFrame(GameTime i_GameTime)
@@ -58,11 +58,11 @@ namespace Infrastructure.Animators.ConcreteAnimators
                 }
             }
 
-            this.BoundSprite.SourceRectangle = new Rectangle(
-                m_CurrCellIdx * this.BoundSprite.SourceRectangle.Width,
-                this.BoundSprite.SourceRectangle.Top,
-                this.BoundSprite.SourceRectangle.Width,
-                this.BoundSprite.SourceRectangle.Height);
+            BoundSprite.SourceRectangle = new Rectangle(
+                m_CurrCellIdx * BoundSprite.SourceRectangle.Width,
+                BoundSprite.SourceRectangle.Top,
+                BoundSprite.SourceRectangle.Width,
+                BoundSprite.SourceRectangle.Height);
         }
     }
 }

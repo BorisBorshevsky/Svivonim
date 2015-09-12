@@ -1,7 +1,7 @@
 //*** Guy Ronen © 2008-2011 ***//
 
 using System;
-using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel2D;
 using Microsoft.Xna.Framework;
 
 namespace Infrastructure.Animators.ConcreteAnimators
@@ -31,7 +31,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
             if (allFinished)
             {
-                this.IsFinished = true;
+                IsFinished = true;
             }
         }
     }

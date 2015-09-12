@@ -1,7 +1,7 @@
 //*** Guy Ronen (c) 2008-2011 ***//
 
 using System.Text;
-using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel2D;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;

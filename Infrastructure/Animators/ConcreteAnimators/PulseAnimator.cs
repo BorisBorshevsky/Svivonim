@@ -35,7 +35,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Scales = OriginalSpriteInfo.Scales;
+            BoundSprite.Scales = OriginalSpriteInfo.Scales;
 
             m_SourceScale = OriginalSpriteInfo.Scales.X;
             m_TargetScale = m_Scale;
@@ -49,30 +49,30 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
             if (m_Shrinking)
             {
-                if (this.BoundSprite.Scales.X > m_TargetScale)
+                if (BoundSprite.Scales.X > m_TargetScale)
                 {
-                    this.BoundSprite.Scales -= new Vector2(totalSeconds * 2 * m_PulsePerSecond * m_DeltaScale);
+                    BoundSprite.Scales -= new Vector2(totalSeconds * 2 * m_PulsePerSecond * m_DeltaScale);
                 }
                 else
                 {
-                    this.BoundSprite.Scales = new Vector2(m_TargetScale);
+                    BoundSprite.Scales = new Vector2(m_TargetScale);
                     m_Shrinking = false;
                     m_TargetScale = m_SourceScale;
-                    m_SourceScale = this.BoundSprite.Scales.X;
+                    m_SourceScale = BoundSprite.Scales.X;
                 }
             }
             else
             {
-                if (this.BoundSprite.Scales.X < m_TargetScale)
+                if (BoundSprite.Scales.X < m_TargetScale)
                 {
-                    this.BoundSprite.Scales += new Vector2(totalSeconds * 2 * m_PulsePerSecond * m_DeltaScale);
+                    BoundSprite.Scales += new Vector2(totalSeconds * 2 * m_PulsePerSecond * m_DeltaScale);
                 }
                 else
                 {
-                    this.BoundSprite.Scales = new Vector2(m_TargetScale);
+                    BoundSprite.Scales = new Vector2(m_TargetScale);
                     m_Shrinking = true;
                     m_TargetScale = m_SourceScale;
-                    m_SourceScale = this.BoundSprite.Scales.X;
+                    m_SourceScale = BoundSprite.Scales.X;
                 }
             }
         }

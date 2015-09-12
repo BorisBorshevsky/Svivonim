@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel2D;
 using Microsoft.Xna.Framework;
 
 namespace Infrastructure.Animators
@@ -16,24 +16,24 @@ namespace Infrastructure.Animators
         public CompositeAnimator(Sprite i_BoundSprite)
             : this("AnimationsMamager", TimeSpan.Zero, i_BoundSprite)
         {
-            this.Enabled = false;
-            this.Initialize();
+            Enabled = false;
+            Initialize();
         }
 
         public CompositeAnimator(string i_Name, TimeSpan i_AnimationLength, Sprite i_BoundSprite, params SpriteAnimator[] i_Animations)
             : base(i_Name, i_AnimationLength)
         {
-            this.BoundSprite = i_BoundSprite;
-            this.Initialize();
+            BoundSprite = i_BoundSprite;
+            Initialize();
             foreach (SpriteAnimator animation in i_Animations)
             {
-                this.Add(animation);
+                Add(animation);
             }
         }
 
         public void Add(SpriteAnimator i_Animation)
         {
-            i_Animation.BoundSprite = this.BoundSprite;
+            i_Animation.BoundSprite = BoundSprite;
             i_Animation.Enabled = true;
             r_AnimationsDictionary.Add(i_Animation.Name, i_Animation);
             r_AnimationsList.Add(i_Animation);

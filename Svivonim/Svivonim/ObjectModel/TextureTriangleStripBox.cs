@@ -35,7 +35,7 @@ namespace Dreidels.ObjectModel
         {
             m_Texture = Game.Content.Load<Texture2D>(@"Textures2D/LinedTexture");
             
-            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(GraphicsDevice);
             m_BasicEffect.Texture = m_Texture;
             m_BasicEffect.TextureEnabled = true;
 
@@ -53,7 +53,6 @@ namespace Dreidels.ObjectModel
                 pass.Apply();
                 m_BasicEffect.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, m_TextureVertices, 0, m_TextureVertices.Length - 2);
             }
-
         }
     }
 }

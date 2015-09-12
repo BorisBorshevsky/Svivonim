@@ -1,18 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Infrastructure.ObjectModel3D;
 using Microsoft.Xna.Framework;
 
-namespace Dreidels.ObjectModel
+namespace Infrastructure.ObjectModel3D
 {
     public class Composite3DComponent : Base3DElement
     {
         readonly List<Base3DElement> r_Components = new List<Base3DElement>(); 
         
         public Composite3DComponent(Game i_Game) : base(i_Game)
-        {
-//            
-        }
+        { }
         public void Add(Base3DElement i_Element)
         {
             if (!r_Components.Contains(i_Element))
@@ -25,7 +22,6 @@ namespace Dreidels.ObjectModel
                 i_Element.SpinEnabled = SpinEnabled;
             }
         }
-
 
         public override void Initialize()
         {
@@ -110,8 +106,5 @@ namespace Dreidels.ObjectModel
 
             get { return base.Scales; }
         }
-
-
-    
     }
 }

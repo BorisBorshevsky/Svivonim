@@ -15,8 +15,8 @@ namespace Dreidels.ObjectModel
 
         public SideWall(Game i_Game, Vector3 i_Scale, Vector3 i_Position) : base(i_Game)
         {
-            this.Scales = i_Scale;
-            this.Position = i_Position;
+            Scales = i_Scale;
+            Position = i_Position;
         }
 
         public SideWall(Game i_Game, Vector3 i_Scale, Vector3 i_Position, bool i_IsCullClockwiseFace)
@@ -45,7 +45,7 @@ namespace Dreidels.ObjectModel
 
         protected override void LoadContent()
         {
-            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(GraphicsDevice);
             m_BasicEffect.VertexColorEnabled = true;
 
             m_VerticesCoordinates = CreateStartCoordinates();
@@ -64,7 +64,6 @@ namespace Dreidels.ObjectModel
             };
         }
 
-
         public override void Draw(GameTime i_GameTime)
         {
             base.Draw(i_GameTime);
@@ -72,10 +71,8 @@ namespace Dreidels.ObjectModel
             foreach (EffectPass pass in m_BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                this.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, m_Vertices, 0, m_Vertices.Length -2);
+                GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, m_Vertices, 0, m_Vertices.Length -2);
             }
-
-
         }
     }
 }

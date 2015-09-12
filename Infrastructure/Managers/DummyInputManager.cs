@@ -40,4 +40,3 @@ namespace Infrastructure.Managers
         public float RightTrigerDelta { get { return 0; } }
     }
 }
-

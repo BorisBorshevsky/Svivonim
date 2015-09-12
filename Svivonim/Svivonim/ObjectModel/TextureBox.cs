@@ -73,18 +73,16 @@ namespace Dreidels.ObjectModel
         protected override void LoadContent()
         {
             m_Texture = Game.Content.Load<Texture2D>(@"Textures2D/LinedTexture");
-            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(GraphicsDevice);
             m_BasicEffect.Texture = m_Texture;
             m_BasicEffect.TextureEnabled = true;
 
             m_VerticesCoordinates = CreateStartCoordinates();
             m_TextureVertices = CreateTextureVertices();
 
-            m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionTexture), m_TextureVertices.Length, BufferUsage.WriteOnly);
-
+            m_VertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionTexture), m_TextureVertices.Length, BufferUsage.WriteOnly);
             m_Indices = CreateIndicesMapping();
-
-            m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
+            m_IndexBuffer = new IndexBuffer(GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
         }
 
         public override void Draw(GameTime i_GameTime)
@@ -102,8 +100,6 @@ namespace Dreidels.ObjectModel
                 pass.Apply();
                 m_BasicEffect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, m_VertexBuffer.VertexCount, 0, m_IndexBuffer.IndexCount / 3);
             }
-
-            
         }
     }
 }

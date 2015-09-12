@@ -22,15 +22,15 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
             : base(i_Name, i_AnimationLength)
         {
-            this.r_VelocityPerSecond = i_VelocityPerSecond;
-            this.r_Waypoints = i_Waypoints;
+            r_VelocityPerSecond = i_VelocityPerSecond;
+            r_Waypoints = i_Waypoints;
             r_Loop = i_Loop;
             m_ResetAfterFinish = false;
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Position = OriginalSpriteInfo.Position;
+            BoundSprite.Position = OriginalSpriteInfo.Position;
         }
 
         protected override void DoFrame(GameTime i_GameTime)
@@ -40,7 +40,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
             float maxDistance = (float)i_GameTime.ElapsedGameTime.TotalSeconds * r_VelocityPerSecond;
 
             // The vector that is left to get to the current waypoint
-            Vector2 remainingVector = r_Waypoints[m_CurrentWaypointIdx] - this.BoundSprite.Position;
+            Vector2 remainingVector = r_Waypoints[m_CurrentWaypointIdx] - BoundSprite.Position;
             if (remainingVector.Length() > maxDistance)
             {
                 // The vector is longer than we can travel,
@@ -50,7 +50,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
             }
 
             // Move
-            this.BoundSprite.Position += remainingVector;
+            BoundSprite.Position += remainingVector;
 
             if (reachedCurrentWaypoint())
             {
@@ -63,7 +63,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
             if (reachedLastWaypoint() && !r_Loop)
             {
                 // No more waypoints, so this animation is finished
-                base.IsFinished = true;
+                IsFinished = true;
             }
             else
             {
@@ -80,7 +80,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         private bool reachedCurrentWaypoint()
         {
-            return (this.BoundSprite.Position == r_Waypoints[m_CurrentWaypointIdx]);
+            return (BoundSprite.Position == r_Waypoints[m_CurrentWaypointIdx]);
         }
     }
 }

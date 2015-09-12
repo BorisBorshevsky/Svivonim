@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Dreidels.ObjectModel;
 using Infrastructure.Common;
-using Infrastructure.ObjectModel;
+using Infrastructure.ObjectModel2D;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -12,17 +12,24 @@ namespace Dreidels
     class GameLogic : RegisteredComponent
     {
         private IInputManager m_InputManager;
-        private DradleSide m_ChosenLetter = DradleSide.Unknown;
+        private eDradleSide m_ChosenLetter = eDradleSide.Unknown;
 
         private int m_SpinningDradles = 0;
         private int m_Score = 0;
 
         private static readonly Random r_Random = new Random();
-
-        private readonly Dictionary<Keys, DradleSide> r_DreidelLettersKeys = new Dictionary<Keys, DradleSide>();
+        private readonly Dictionary<Keys, eDradleSide> r_DreidelLettersKeys = new Dictionary<Keys, eDradleSide>();
         private readonly List<DreidelBase> r_Dradels = new List<DreidelBase>();
         private readonly List<Vector3> r_PossiblePossitions = new List<Vector3>();
-
+        
+        private const int k_MinDreidelXPosition = -12;
+        private const int k_MaxDreidelXPosition = 12;
+        private const int k_DreidelXPositionJumpInterval = 4;
+        private const int k_MinDreidelYPosition = -10;
+        private const int k_MaxDreidelYPosition = 10;
+        private const int k_DreidelYPositionJumpInterval = 5;
+        private const int k_MinDreidelZPosition = -20;
+        private const int k_MaxDreidelZPosition = 20;
 
         public GameLogic(Game i_Game)
             : base(i_Game)
@@ -30,18 +37,18 @@ namespace Dreidels
 
         private void initializeRandomPositions()
         {
-            for (int x = -12; x <= 12; x += 4)
+            for (int x = k_MinDreidelXPosition; x <= k_MaxDreidelXPosition; x += k_DreidelXPositionJumpInterval)
             {
-                for (int y = -10; y <= 10; y += 5)
+                for (int y = k_MinDreidelYPosition; y <= k_MaxDreidelYPosition; y += k_DreidelYPositionJumpInterval)
                 {
-                    r_PossiblePossitions.Add(new Vector3(x, y, r_Random.Next(-20, 20)));
+                    r_PossiblePossitions.Add(new Vector3(x, y, r_Random.Next(k_MinDreidelZPosition, k_MaxDreidelZPosition)));
                 }
             }
         }
 
         public bool CanSpin
         {
-            get { return m_SpinningDradles == 0 && m_ChosenLetter != DradleSide.Unknown; }
+            get { return m_SpinningDradles == 0 && m_ChosenLetter != eDradleSide.Unknown; }
         }
 
         public override void Update(GameTime i_GameTime)
@@ -59,8 +66,7 @@ namespace Dreidels
                 }
             }
 
-            Game.Window.Title = "LetterChosen: " + m_ChosenLetter.GetDescription() + "   The Score is: " + m_Score;
-
+            updateTitle();
             if (m_InputManager.KeyPressed(Keys.Space) && CanSpin)
             {
                 r_Dradels.ForEach(i_Dradel =>
@@ -69,6 +75,11 @@ namespace Dreidels
                     m_SpinningDradles++;
                 });
             }
+        }
+
+        private void updateTitle()
+        {
+            Game.Window.Title = "Letter Chosen: " + m_ChosenLetter.GetDescription() + "   The Score is: " + m_Score;
         }
 
         public override void Initialize()
@@ -108,16 +119,15 @@ namespace Dreidels
 
         private void initializeLetters()
         {
-            r_DreidelLettersKeys.Add(Keys.B, DradleSide.Nun);
-            r_DreidelLettersKeys.Add(Keys.D, DradleSide.Gimel);
-            r_DreidelLettersKeys.Add(Keys.V, DradleSide.Hey);
-            r_DreidelLettersKeys.Add(Keys.P, DradleSide.Pey);
+            r_DreidelLettersKeys.Add(Keys.B, eDradleSide.Nun);
+            r_DreidelLettersKeys.Add(Keys.D, eDradleSide.Gimel);
+            r_DreidelLettersKeys.Add(Keys.V, eDradleSide.Hey);
+            r_DreidelLettersKeys.Add(Keys.P, eDradleSide.Pey);
         }
 
-        private void dreidelOnStopped(DradleSide i_DreidelSide)
+        private void dreidelOnStopped(eDradleSide i_DreidelSide)
         {
             m_SpinningDradles--;
-
             if (i_DreidelSide == m_ChosenLetter)
             {
                 m_Score++;
@@ -125,8 +135,11 @@ namespace Dreidels
 
             if (m_SpinningDradles == 0)
             {
-                m_ChosenLetter = DradleSide.Unknown; ;
+                m_ChosenLetter = eDradleSide.Unknown;
             }
         }
+
+        public int MinimumDreidelXPosition { get; set; }
+
     }
 }

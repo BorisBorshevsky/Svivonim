@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace Dreidels.ObjectModel.Services
+namespace Infrastructure.ServiceInterfaces
 {
     public interface ICameraManager
     {
         Matrix CameraSettings { get; }
         Matrix CameraState { get; }
-
     }
-
 }

@@ -6,7 +6,7 @@ using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Infrastructure.ObjectModel.Screens
+namespace Infrastructure.ObjectModel2D.Screens
 {
     public enum eScreenState
     {
@@ -54,8 +54,8 @@ namespace Infrastructure.ObjectModel.Screens
         public GameScreen(Game i_Game)
             : base(i_Game)
         {
-            this.Enabled = false;
-            this.Visible = false;
+            Enabled = false;
+            Visible = false;
         }
 
         protected eScreenState m_State = eScreenState.Inactive;
@@ -159,7 +159,7 @@ namespace Infrastructure.ObjectModel.Screens
 
         public IInputManager InputManager
         {
-            get { return this.HasFocus ? m_InputManager : m_DummyInputManager; }
+            get { return HasFocus ? m_InputManager : m_DummyInputManager; }
         }
 
         protected ISoundManager m_SoundManager;
@@ -185,28 +185,28 @@ namespace Infrastructure.ObjectModel.Screens
 
         internal virtual void Activate()
         {
-            if (this.State == eScreenState.Inactive|| this.State == eScreenState.Deactivating|| this.State == eScreenState.Closed|| this.State == eScreenState.Closing){
-                this.State = eScreenState.Activating;
+            if (State == eScreenState.Inactive|| State == eScreenState.Deactivating|| State == eScreenState.Closed|| State == eScreenState.Closing){
+                State = eScreenState.Activating;
 
                 if (m_ActivationLength == TimeSpan.Zero)
                 {
-                    this.State = eScreenState.Active;
+                    State = eScreenState.Active;
                 }
             }
         }
 
         protected virtual void OnActivating()
         {
-            this.Enabled = true;
-            this.Visible = true;
-            this.HasFocus = true;
+            Enabled = true;
+            Visible = true;
+            HasFocus = true;
         }
 
         protected virtual void OnActivated()
         {
             if (PreviousScreen != null)
             {
-                PreviousScreen.HasFocus = !this.HasFocus;
+                PreviousScreen.HasFocus = !HasFocus;
             }
 
             m_TransitionPosition = 1;
@@ -214,31 +214,31 @@ namespace Infrastructure.ObjectModel.Screens
 
         protected internal virtual void Deactivate()
         {
-            if (this.State == eScreenState.Active|| this.State == eScreenState.Activating)
+            if (State == eScreenState.Active|| State == eScreenState.Activating)
             {
-                this.State = eScreenState.Deactivating;
+                State = eScreenState.Deactivating;
 
                 if (m_DeactivationLength == TimeSpan.Zero)
                 {
-                    this.State = eScreenState.Inactive;
+                    State = eScreenState.Inactive;
                 }
             }
         }
 
         public void ExitScreen()
         {
-            this.State = eScreenState.Closing;
+            State = eScreenState.Closing;
             if (DeactivationLength == TimeSpan.Zero)
             {
-                this.State = eScreenState.Closed;
+                State = eScreenState.Closed;
             }
         }
 
         protected virtual void OnDeactivated()
         {
-            this.Enabled = false;
-            this.Visible = false;
-            this.HasFocus = false;
+            Enabled = false;
+            Visible = false;
+            HasFocus = false;
 
             m_TransitionPosition = 0;
         }
@@ -249,8 +249,8 @@ namespace Infrastructure.ObjectModel.Screens
         {
             base.LoadContent();
 
-            m_GradientTexture = this.ContentManager.Load<Texture2D>(@"Screens\gradient");
-            m_BlankTexture = this.ContentManager.Load<Texture2D>(@"Screens\blank");
+            m_GradientTexture = ContentManager.Load<Texture2D>(@"Screens\gradient");
+            m_BlankTexture = ContentManager.Load<Texture2D>(@"Screens\blank");
         }
 
         public override void Draw(GameTime i_GameTime)
@@ -288,7 +288,7 @@ namespace Infrastructure.ObjectModel.Screens
 
         public void FadeBackBufferToBlack(byte i_Alpha)
         {
-            Viewport viewport = this.GraphicsDevice.Viewport;
+            Viewport viewport = GraphicsDevice.Viewport;
 
             Texture2D background = UseGradientBackground ? m_GradientTexture : m_BlankTexture;
 
@@ -353,7 +353,7 @@ namespace Infrastructure.ObjectModel.Screens
         public override void Update(GameTime i_GameTime)
         {
             bool doUpdate = true;
-            switch (this.State)
+            switch (State)
             {
                 case eScreenState.Activating:
                 case eScreenState.Deactivating:
@@ -374,7 +374,7 @@ namespace Infrastructure.ObjectModel.Screens
             {
                 base.Update(i_GameTime);
 
-                if (PreviousScreen != null && !this.IsModal)
+                if (PreviousScreen != null && !IsModal)
                 {
                     PreviousScreen.Update(i_GameTime);
                 }
@@ -387,9 +387,9 @@ namespace Infrastructure.ObjectModel.Screens
         {
             bool transionEnded = false;
 
-            int direction = this.State == eScreenState.Activating ? 1 : -1;
+            int direction = State == eScreenState.Activating ? 1 : -1;
 
-            TimeSpan transitionLength = this.State == eScreenState.Activating ? m_ActivationLength : m_DeactivationLength;
+            TimeSpan transitionLength = State == eScreenState.Activating ? m_ActivationLength : m_DeactivationLength;
 
             // How much should we move by?
             float transitionDelta;
@@ -424,18 +424,18 @@ namespace Infrastructure.ObjectModel.Screens
 
         private void onTransitionEnded()
         {
-            switch (this.State)
+            switch (State)
             {
                 case eScreenState.Inactive:
                 case eScreenState.Activating:
-                    this.State = eScreenState.Active;
+                    State = eScreenState.Active;
                     break;
                 case eScreenState.Active:
                 case eScreenState.Deactivating:
-                    this.State = eScreenState.Inactive;
+                    State = eScreenState.Inactive;
                     break;
                 case eScreenState.Closing:
-                    this.State = eScreenState.Closed;
+                    State = eScreenState.Closed;
                     break;
             }
         }

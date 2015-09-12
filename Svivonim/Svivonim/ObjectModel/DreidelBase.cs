@@ -14,6 +14,8 @@ namespace Dreidels.ObjectModel
         private const int k_MinRoundsPerSecond = 3000; //devided by 1000
         private const int k_MaxRoundsPerSecond = 10000;
 
+        public event Action<eDradleSide> Stopped;
+
         protected DreidelBase(Game i_Game, Vector3 i_Position, Color i_StickColor)
             : base(i_Game)
         {
@@ -25,8 +27,6 @@ namespace Dreidels.ObjectModel
             m_Stick = new Stick(i_Game, i_StickColor, new Vector3(0, 1, 0), new Vector3(.25f, 1f, .25f));
             Add(m_Stick);
         }
-
-        public event Action<DradleSide> Stopped;
 
         private void onStop()
         {
@@ -45,7 +45,6 @@ namespace Dreidels.ObjectModel
             SpinEnabled = true;
         }
 
-
         public override void Update(GameTime i_GameTime)
         {
             base.Update(i_GameTime);
@@ -59,35 +58,32 @@ namespace Dreidels.ObjectModel
                     onStop();
                 }
             }
-
         }
 
-
-        public DradleSide GetLetter()
+        public eDradleSide GetLetter()
         {
-            DradleSide dradleSide = DradleSide.Unknown;
+            eDradleSide dradleSide = eDradleSide.Unknown;
 
             float rotationY = Rotations.Y % MathHelper.TwoPi;
 
             if (rotationY < MathHelper.PiOver4 || rotationY > MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                dradleSide = DradleSide.Pey;
+                dradleSide = eDradleSide.Pey;
             }
             else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                dradleSide = DradleSide.Gimel;
+                dradleSide = eDradleSide.Gimel;
             }
             else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                dradleSide = DradleSide.Nun;
+                dradleSide = eDradleSide.Nun;
             }
             else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                dradleSide = DradleSide.Hey;
+                dradleSide = eDradleSide.Hey;
             }
 
             return dradleSide;
         }
-
     }
 }

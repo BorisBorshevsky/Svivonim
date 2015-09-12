@@ -1,9 +1,9 @@
-﻿using Infrastructure.ObjectModel.Screens;
+﻿using Infrastructure.ObjectModel2D.Screens;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Infrastructure.ObjectModel
+namespace Infrastructure.ObjectModel2D
 {
     public class PixelSensitiveSprite : Sprite
     {

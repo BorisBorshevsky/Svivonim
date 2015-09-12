@@ -33,7 +33,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Rotation = OriginalSpriteInfo.Rotation;
+            BoundSprite.Rotation = OriginalSpriteInfo.Rotation;
         }
     }
 }

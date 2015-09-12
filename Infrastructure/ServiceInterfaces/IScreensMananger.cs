@@ -1,6 +1,6 @@
 ﻿//*** Guy Ronen © 2008-2011 ***//
 
-using Infrastructure.ObjectModel.Screens;
+using Infrastructure.ObjectModel2D.Screens;
 
 namespace Infrastructure.ServiceInterfaces
 {

@@ -9,7 +9,6 @@ namespace Infrastructure.Common
         {
             string result;
             FieldInfo fieldInfo = i_Source.GetType().GetField(i_Source.ToString());
-
             DescriptionAttribute[] attributes = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
 
             if (attributes != null && attributes.Length > 0)

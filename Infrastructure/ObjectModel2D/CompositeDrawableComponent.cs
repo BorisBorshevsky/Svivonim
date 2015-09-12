@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Infrastructure.ObjectModel
+namespace Infrastructure.ObjectModel2D
 {
     /// <summary>
     /// A class to assist with being able to nest game components inside of each other, provides support for all of the
@@ -221,7 +221,7 @@ namespace Infrastructure.ObjectModel
         {
             base.LoadContent();
 
-            m_SpriteBatch = new SpriteBatch(this.GraphicsDevice);
+            m_SpriteBatch = new SpriteBatch(GraphicsDevice);
 
             foreach (Sprite sprite in m_Sprites)
             {
@@ -252,8 +252,8 @@ namespace Infrastructure.ObjectModel
             }
 
             m_SpriteBatch.Begin(
-                this.SpritesSortMode, this.BlendState, this.SamplerState,
-                this.DepthStencilState, this.RasterizerState, this.Shader, this.TransformMatrix);
+                SpritesSortMode, BlendState, SamplerState,
+                DepthStencilState, RasterizerState, Shader, TransformMatrix);
 
             foreach (Sprite sprite in m_Sprites)
             {
@@ -288,7 +288,7 @@ namespace Infrastructure.ObjectModel
 
         public virtual void Add(TComponentType i_Component)
         {
-            this.InsertItem(m_Components.Count, i_Component);
+            InsertItem(m_Components.Count, i_Component);
         }
 
         protected virtual void InsertItem(int i_Idx, TComponentType i_Component)
@@ -429,7 +429,7 @@ namespace Infrastructure.ObjectModel
 
         public ContentManager ContentManager
         {
-            get { return this.Game.Content; }
+            get { return Game.Content; }
         }
         #endregion Helping Properties
     }

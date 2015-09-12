@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Infrastructure.Animators;
-using Infrastructure.ObjectModel.Screens;
+using Infrastructure.ObjectModel2D.Screens;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

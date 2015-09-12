@@ -1,5 +1,4 @@
-﻿using Dreidels.ObjectModel.Services;
-using Infrastructure.Managers;
+﻿using Infrastructure.Managers;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 
@@ -11,12 +10,9 @@ namespace Dreidels
     public class DreidelsGame : Game
     {
         GraphicsDeviceManager m_Graphics;
-
-
         private readonly ICameraManager r_CameraManager;
         private IInputManager m_InputManager;
         private GameLogic m_GameLogic;
-
 
         public DreidelsGame()
         {
@@ -28,7 +24,6 @@ namespace Dreidels
             m_InputManager = new InputManager(this);
 
             m_GameLogic = new GameLogic(this);
-
         }
 
         protected override void Draw(GameTime i_GameTime)

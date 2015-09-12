@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using Infrastructure.ObjectModel;
-using Infrastructure.ObjectModel.Screens;
+using Infrastructure.ObjectModel2D;
+using Infrastructure.ObjectModel2D.Screens;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 
@@ -38,9 +38,9 @@ namespace Infrastructure.Managers
             // hello new screen, I am your manager, nice to meet you:
             i_GameScreen.ScreensManager = this;
 
-            if (!this.Contains(i_GameScreen))
+            if (!Contains(i_GameScreen))
             {
-                this.add(i_GameScreen);
+                add(i_GameScreen);
 
                 // let me know when you are closed, so i can pop you from the stack:
                 i_GameScreen.StateChanged += Screen_StateChanged;
@@ -103,12 +103,12 @@ namespace Infrastructure.Managers
 
         private new bool remove(GameScreen i_Screen)
         {
-            return base.Remove(i_Screen);
+            return Remove(i_Screen);
         }
 
         private new void add(GameScreen i_Component)
         {
-            base.Add(i_Component);
+            Add(i_Component);
         }
 
         public event EventHandler<StateChangedEventArgs> ScreenStateChanged;

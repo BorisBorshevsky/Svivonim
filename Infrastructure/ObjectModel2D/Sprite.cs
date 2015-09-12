@@ -1,11 +1,10 @@
-
 using Infrastructure.Animators;
-using Infrastructure.ObjectModel.Screens;
+using Infrastructure.ObjectModel2D.Screens;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Infrastructure.ObjectModel
+namespace Infrastructure.ObjectModel2D
 {
     public class Sprite : LoadableDrawableComponent
     {
@@ -82,13 +81,13 @@ namespace Infrastructure.ObjectModel
 
         protected Vector2 PositionForDraw
         {
-            get { return this.Position - this.PositionOrigin + this.RotationOrigin; }
+            get { return Position - PositionOrigin + RotationOrigin; }
         }
 
         public Vector2 TopLeftPosition
         {
-            get { return this.Position - this.PositionOrigin; }
-            set { this.Position = value + this.PositionOrigin; }
+            get { return Position - PositionOrigin; }
+            set { Position = value + PositionOrigin; }
         }
 
         public Rectangle Bounds
@@ -98,8 +97,8 @@ namespace Infrastructure.ObjectModel
                 return new Rectangle(
                     (int)TopLeftPosition.X,
                     (int)TopLeftPosition.Y,
-                    (int)this.Width,
-                    (int)this.Height);
+                    (int)Width,
+                    (int)Height);
             }
         }
 
@@ -110,8 +109,8 @@ namespace Infrastructure.ObjectModel
                 return new Rectangle(
                     (int)TopLeftPosition.X,
                     (int)TopLeftPosition.Y,
-                    (int)this.WidthBeforeScale,
-                    (int)this.HeightBeforeScale);
+                    (int)WidthBeforeScale,
+                    (int)HeightBeforeScale);
             }
         }
 
@@ -297,12 +296,12 @@ namespace Infrastructure.ObjectModel
         {
             float totalSeconds = (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-            this.Position += this.Velocity * totalSeconds;
-            this.Rotation += this.AngularVelocity * totalSeconds;
+            Position += Velocity * totalSeconds;
+            Rotation += AngularVelocity * totalSeconds;
 
             base.Update(i_GameTime);
 
-            this.Animations.Update(i_GameTime);
+            Animations.Update(i_GameTime);
         }
 
         /// <summary>
@@ -316,7 +315,7 @@ namespace Infrastructure.ObjectModel
                 m_SpriteBatch.Begin();
             }
 
-            m_SpriteBatch.Draw(m_Texture, this.PositionForDraw, this.SourceRectangle, this.TintColor, this.Rotation, this.RotationOrigin, this.Scales, SpriteEffects.None, this.LayerDepth);
+            m_SpriteBatch.Draw(m_Texture, PositionForDraw, SourceRectangle, TintColor, Rotation, RotationOrigin, Scales, SpriteEffects.None, LayerDepth);
 
             if (!m_UseSharedBatch)
             {
@@ -338,7 +337,7 @@ namespace Infrastructure.ObjectModel
             ICollidable2D source = i_Source as ICollidable2D;
             if (source != null)
             {
-                collided = source.Bounds.Intersects(this.Bounds);
+                collided = source.Bounds.Intersects(Bounds);
             }
 
             return collided;
@@ -352,7 +351,7 @@ namespace Infrastructure.ObjectModel
 
         public Sprite ShallowClone()
         {
-            return this.MemberwiseClone() as Sprite;
+            return MemberwiseClone() as Sprite;
         }
 
         public virtual bool IsOutOfBounts()

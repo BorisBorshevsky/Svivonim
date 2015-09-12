@@ -1,4 +1,4 @@
-﻿using Dreidels.ObjectModel.Services;
+﻿using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -55,10 +55,6 @@ namespace Infrastructure.ObjectModel3D
             base.Initialize();
             r_RasterizerState.CullMode = m_CullMode; 
             m_CameraManager = Game.Services.GetService<ICameraManager>();
-            if (m_CameraManager == null && this.GetType().ToString().Contains("PositionColorDradle"))
-            {
-                
-            }
         }
 
         protected override void LoadContent()
@@ -66,7 +62,6 @@ namespace Infrastructure.ObjectModel3D
             base.LoadContent();
             m_BasicEffect = new BasicEffect(Game.GraphicsDevice);
         }
-
 
         protected override void UnloadContent()
         {
@@ -106,7 +101,6 @@ namespace Infrastructure.ObjectModel3D
             m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
             m_BasicEffect.World = m_WorldMatrix;
         }
-
 
         protected abstract Vector3[] CreateStartCoordinates();
 

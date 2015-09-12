@@ -2,7 +2,7 @@
 
 namespace Dreidels.ObjectModel
 {
-    enum DradleSide
+    enum eDradleSide
     {
         [Description("Not Chosen yet")]
         Unknown,

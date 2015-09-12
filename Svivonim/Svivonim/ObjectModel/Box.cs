@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Infrastructure.ObjectModel3D;
+using Microsoft.Xna.Framework;
 
 namespace Dreidels.ObjectModel
 {
@@ -17,20 +18,20 @@ namespace Dreidels.ObjectModel
             : base(i_Game)
         {
             const bool r_VIsRenderedClockwise = true;
-            this.Add(new SideWall(i_Game, Vector3.One, new Vector3(0, 1, 0), r_VIsRenderedClockwise));
-            this.Add(new SideWall(i_Game, Vector3.One, new Vector3(0, -1, 0) , !r_VIsRenderedClockwise));
+            Add(new SideWall(i_Game, Vector3.One, new Vector3(0, 1, 0), r_VIsRenderedClockwise));
+            Add(new SideWall(i_Game, Vector3.One, new Vector3(0, -1, 0) , !r_VIsRenderedClockwise));
         }
 
         protected Box(Game i_Game, Vector3 i_Position)
             : this(i_Game)
         {
-            this.Position = i_Position;
+            Position = i_Position;
         }
 
         protected Box(Game i_Game, Vector3 i_Position, Vector3 i_Scale)
             : this(i_Game, i_Position)
         {
-            this.m_Scale = i_Scale;
+            m_Scale = i_Scale;
         }
 
         protected override Vector3[] CreateStartCoordinates()

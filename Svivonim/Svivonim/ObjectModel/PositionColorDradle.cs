@@ -9,7 +9,6 @@ namespace Dreidels.ObjectModel
         {
             m_Body = new ColorBox(i_Game, Vector3.Zero);
             Add(m_Body);
-
         }
     }
 }

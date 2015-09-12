@@ -1,4 +1,4 @@
-﻿using Infrastructure.ObjectModel.Screens;
+﻿using Infrastructure.ObjectModel2D.Screens;
 using Microsoft.Xna.Framework.Input;
 
 namespace Infrastructure.Menu

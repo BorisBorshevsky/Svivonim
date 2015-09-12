@@ -1,7 +1,7 @@
 ﻿using System;
 using Infrastructure.Animators.ConcreteAnimators;
-using Infrastructure.ObjectModel;
-using Infrastructure.ObjectModel.Screens;
+using Infrastructure.ObjectModel2D;
+using Infrastructure.ObjectModel2D.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -34,8 +34,8 @@ namespace Infrastructure.Animators
             base.Initialize();
             m_SpriteBatch = new SpriteBatch(Game.GraphicsDevice);
             m_PulseAnimator = new PulseAnimator("PulseAnimator", new TimeSpan(), 1f, 1f);
-            this.Animations.Add(m_PulseAnimator);
-            this.Animations.Enabled = false;
+            Animations.Add(m_PulseAnimator);
+            Animations.Enabled = false;
         }
 
         protected override void InitBounds()
@@ -48,7 +48,7 @@ namespace Infrastructure.Animators
 
         public override void Draw(GameTime i_GameTime)
         {
-            m_SpriteBatch.DrawString(SpriteFont, displayText(), m_Position, this.TintColor, this.Rotation, this.RotationOrigin, this.Scales, SpriteEffects.None, this.LayerDepth);
+            m_SpriteBatch.DrawString(SpriteFont, displayText(), m_Position, TintColor, Rotation, RotationOrigin, Scales, SpriteEffects.None, LayerDepth);
         }
 
         private string displayText()

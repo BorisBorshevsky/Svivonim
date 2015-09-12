@@ -6,6 +6,8 @@ namespace Dreidels.ObjectModel
 {
     class ColorBox : Box
     {
+        protected List<VertexPositionColor> Vertices { get; set; }
+
         public ColorBox(Game i_Game, Vector3 i_Position)
             : base(i_Game)
         {
@@ -14,7 +16,7 @@ namespace Dreidels.ObjectModel
 
         protected override void LoadContent()
         {
-            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(GraphicsDevice);
             m_BasicEffect.VertexColorEnabled = true;
 
             m_VerticesCoordinates = CreateStartCoordinates();
@@ -205,7 +207,5 @@ namespace Dreidels.ObjectModel
                 GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, Vertices.ToArray(), 0, Vertices.Count / 3);
             }
         }
-
-        public List<VertexPositionColor> Vertices { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 //*** Guy Ronen (c) 2008-2011 ***//
 
-using Infrastructure.ObjectModel.Screens;
+using Infrastructure.ObjectModel2D.Screens;
 using Microsoft.Xna.Framework;
 
-namespace Infrastructure.ObjectModel
+namespace Infrastructure.ObjectModel2D
 {
     public class RegisteredComponent : GameComponent
     {

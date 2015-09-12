@@ -2,7 +2,7 @@
 
 using Microsoft.Xna.Framework;
 
-namespace Infrastructure.ObjectModel
+namespace Infrastructure.ObjectModel2D
 {
     public abstract class GameService : RegisteredComponent
     {

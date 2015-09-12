@@ -20,19 +20,17 @@ namespace Dreidels.ObjectModel
         protected override void LoadContent()
         {
             base.LoadContent();
-            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(GraphicsDevice);
             m_BasicEffect.VertexColorEnabled = true;
 
             m_VerticesCoordinates = CreateStartCoordinates();
             
             m_ColorVertices = CreateColorVertices();
-            m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionColor), m_ColorVertices.Length, BufferUsage.WriteOnly);
+            m_VertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), m_ColorVertices.Length, BufferUsage.WriteOnly);
 
             m_Indices = CreateIndicesMapping();
-            m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
-
+            m_IndexBuffer = new IndexBuffer(GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
         }
-
 
         protected virtual VertexPositionColor[] CreateColorVertices()
         {
