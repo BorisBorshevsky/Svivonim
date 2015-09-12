@@ -2,9 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Dreidels.ObjectModel
+namespace Infrastructure.ObjectModel3D
 {
-    abstract class Base3DElement : DrawableGameComponent
+    public abstract class Base3DElement : DrawableGameComponent
     {
         protected ICameraManager m_CameraManager;
         private Vector3 m_Position = Vector3.Zero;
@@ -16,6 +16,7 @@ namespace Dreidels.ObjectModel
         protected IndexBuffer m_IndexBuffer;
         protected Vector3[] m_VerticesCoordinates;
         protected readonly RasterizerState r_RasterizerState = new RasterizerState();
+        protected CullMode m_CullMode = CullMode.CullCounterClockwiseFace;
 
         protected Vector3 m_Scale = Vector3.One;
 
@@ -52,9 +53,20 @@ namespace Dreidels.ObjectModel
         public override void Initialize()
         {
             base.Initialize();
-            r_RasterizerState.CullMode = CullMode.CullCounterClockwiseFace; //TODO: change back to CullCounterClockwiseFace
+            r_RasterizerState.CullMode = m_CullMode; 
             m_CameraManager = Game.Services.GetService<ICameraManager>();
+            if (m_CameraManager == null && this.GetType().ToString().Contains("PositionColorDradle"))
+            {
+                
+            }
         }
+
+        protected override void LoadContent()
+        {
+            base.LoadContent();
+            m_BasicEffect = new BasicEffect(Game.GraphicsDevice);
+        }
+
 
         protected override void UnloadContent()
         {
@@ -85,8 +97,19 @@ namespace Dreidels.ObjectModel
                 Matrix.CreateTranslation(m_Position);
         }
 
-        protected abstract Vector3[] createStartCoordinates();
+        public override void Draw(GameTime i_GameTime)
+        {
+            base.Draw(i_GameTime);
 
-        protected abstract short[] createIndicesMapping();
+            m_BasicEffect.Projection = m_CameraManager.CameraSettings;
+            m_BasicEffect.View = m_CameraManager.CameraState;
+            m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
+            m_BasicEffect.World = m_WorldMatrix;
+        }
+
+
+        protected abstract Vector3[] CreateStartCoordinates();
+
+        protected abstract short[] CreateIndicesMapping();
     }
 }

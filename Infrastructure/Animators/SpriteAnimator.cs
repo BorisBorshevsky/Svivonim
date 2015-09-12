@@ -16,7 +16,7 @@ namespace Infrastructure.Animators
         private bool m_Initialized = false;
         private string m_Name;
         protected bool m_ResetAfterFinish = true;
-        protected internal Sprite m_OriginalSpriteInfo;
+        protected internal Sprite OriginalSpriteInfo;
 
         public event EventHandler Finished;
 
@@ -91,9 +91,9 @@ namespace Infrastructure.Animators
 
         protected virtual void CloneSpriteInfo()
         {
-            if (m_OriginalSpriteInfo == null)
+            if (OriginalSpriteInfo == null)
             {
-                m_OriginalSpriteInfo = m_BoundSprite.ShallowClone();
+                OriginalSpriteInfo = m_BoundSprite.ShallowClone();
             }
         }
 

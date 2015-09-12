@@ -132,3 +132,4 @@ C:\Tools\VS13Workspace\Hit\XNA\Svivonim\Infrastructure\bin\Windows\Debug\SharpDX
 C:\Tools\VS13Workspace\Hit\XNA\Svivonim\Infrastructure\bin\Windows\Debug\SharpDX.Direct3D9.xml
 C:\Tools\VS13Workspace\Hit\XNA\Svivonim\Infrastructure\obj\x86\Debug\Infrastructure.dll
 C:\Tools\VS13Workspace\Hit\XNA\Svivonim\Infrastructure\obj\x86\Debug\Infrastructure.pdb
+C:\Tools\VS13Workspace\Hit\XNA\Svivonim\Infrastructure\obj\x86\Debug\Infrastructure.csprojResolveAssemblyReference.cache

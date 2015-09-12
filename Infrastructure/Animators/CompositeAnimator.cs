@@ -94,7 +94,7 @@ namespace Infrastructure.Animators
 
             foreach (SpriteAnimator animation in r_AnimationsList)
             {
-                animation.m_OriginalSpriteInfo = m_OriginalSpriteInfo;
+                animation.OriginalSpriteInfo = OriginalSpriteInfo;
             }
         }
 

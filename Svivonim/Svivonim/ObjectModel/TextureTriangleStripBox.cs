@@ -1,15 +1,14 @@
-﻿using Dreidels.ObjectModel.Services;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Dreidels.ObjectModel
 {
-    class TextureBoxStrip : Box
+    class TextureTriangleStripBox : Box
     {
         private Texture2D m_Texture;
         private VertexPositionTexture[] m_TextureVertices;
 
-        public TextureBoxStrip(Game i_Game, Vector3 i_Position)
+        public TextureTriangleStripBox(Game i_Game, Vector3 i_Position)
             : base(i_Game)
         {
             Position = i_Position;
@@ -35,32 +34,26 @@ namespace Dreidels.ObjectModel
         protected override void LoadContent()
         {
             m_Texture = Game.Content.Load<Texture2D>(@"Textures2D/LinedTexture");
-
-            m_BasicEffect = new BasicEffect(this.GraphicsDevice);
+            
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
             m_BasicEffect.Texture = m_Texture;
             m_BasicEffect.TextureEnabled = true;
 
-            m_VerticesCoordinates = createStartCoordinates();
+            m_VerticesCoordinates = CreateStartCoordinates();
 
             m_TextureVertices = CreateTextureVertices();
         }
 
         public override void Draw(GameTime i_GameTime)
         {
-            m_BasicEffect.Projection = m_CameraManager.CameraSettings;
-            m_BasicEffect.View = m_CameraManager.CameraState;
-
-            m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
-
-            m_BasicEffect.World = m_WorldMatrix;
-
+            base.Draw(i_GameTime);
+            
             foreach (var pass in m_BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 m_BasicEffect.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, m_TextureVertices, 0, m_TextureVertices.Length - 2);
             }
 
-            base.Draw(i_GameTime);
         }
     }
 }

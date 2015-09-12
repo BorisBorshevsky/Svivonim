@@ -5,17 +5,17 @@ namespace Dreidels.ObjectModel
 {
     class Pyramid : Composite3DComponent
     {
-        private Color m_Color = Color.Blue;
+        private readonly Color r_Color = Color.Blue;
         private VertexPositionColor[] m_ColorVertices;
         private short[] m_Indices;
 
 
-        public Pyramid(Game game)
-            : base(game)
+        public Pyramid(Game i_Game)
+            : base(i_Game)
         {
         }
 
-        protected override Vector3[] createStartCoordinates()
+        protected override Vector3[] CreateStartCoordinates()
         {
             var cordinates = new Vector3[5];
             cordinates[0] = new Vector3(-1, -1, -1); //front left
@@ -27,19 +27,19 @@ namespace Dreidels.ObjectModel
         }
 
 
-        protected virtual VertexPositionColor[] createColorVertices()
+        protected virtual VertexPositionColor[] CreateColorVertices()
         {
             var textureVerticale = new VertexPositionColor[5];
-            textureVerticale[0] = new VertexPositionColor(m_VerticesCoordinates[0], m_Color);
-            textureVerticale[1] = new VertexPositionColor(m_VerticesCoordinates[1], m_Color);
-            textureVerticale[2] = new VertexPositionColor(m_VerticesCoordinates[2], m_Color);
-            textureVerticale[3] = new VertexPositionColor(m_VerticesCoordinates[3], m_Color);
+            textureVerticale[0] = new VertexPositionColor(m_VerticesCoordinates[0], r_Color);
+            textureVerticale[1] = new VertexPositionColor(m_VerticesCoordinates[1], r_Color);
+            textureVerticale[2] = new VertexPositionColor(m_VerticesCoordinates[2], r_Color);
+            textureVerticale[3] = new VertexPositionColor(m_VerticesCoordinates[3], r_Color);
             textureVerticale[4] = new VertexPositionColor(m_VerticesCoordinates[4], Color.Black);
 
             return textureVerticale;
         }
 
-        protected override short[] createIndicesMapping()
+        protected override short[] CreateIndicesMapping()
         {
             short[] indices = new short[12];
             // Front face
@@ -68,16 +68,15 @@ namespace Dreidels.ObjectModel
         protected override void LoadContent()
         {
             base.LoadContent();
-
-            m_BasicEffect = new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
             m_BasicEffect.VertexColorEnabled = true;
 
-            m_VerticesCoordinates = createStartCoordinates();
-            m_ColorVertices = createColorVertices();
+            m_VerticesCoordinates = CreateStartCoordinates();
+            m_ColorVertices = CreateColorVertices();
 
             m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionColor), m_ColorVertices.Length, BufferUsage.WriteOnly);
 
-            m_Indices = createIndicesMapping();
+            m_Indices = CreateIndicesMapping();
 
             m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
         }
@@ -85,17 +84,14 @@ namespace Dreidels.ObjectModel
 
         public override void Draw(GameTime i_GameTime)
         {
-            m_BasicEffect.Projection = m_CameraManager.CameraSettings;
-            m_BasicEffect.View = m_CameraManager.CameraState;
 
+            base.Draw(i_GameTime);
+            
             m_IndexBuffer.SetData(m_Indices);
             m_VertexBuffer.SetData(m_ColorVertices, 0, m_ColorVertices.Length);
 
             m_BasicEffect.GraphicsDevice.Indices = m_IndexBuffer;
             m_BasicEffect.GraphicsDevice.SetVertexBuffer(m_VertexBuffer);
-            m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
-            m_BasicEffect.World = m_WorldMatrix;
-
 
             foreach (var pass in m_BasicEffect.CurrentTechnique.Passes)
             {
@@ -105,7 +101,7 @@ namespace Dreidels.ObjectModel
             }
 
 
-            base.Draw(i_GameTime);
+            
         }
     }
 }

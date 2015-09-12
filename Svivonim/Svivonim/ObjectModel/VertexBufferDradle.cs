@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Dreidels.ObjectModel
 {
-    class Dreidel3 : DreidelBase
+    class VertexBufferDradle : DreidelBase
     {
 
-        public Dreidel3(Game i_Game, Vector3 i_Position)
+        public VertexBufferDradle(Game i_Game, Vector3 i_Position)
             : base(i_Game, i_Position, Color.Blue)
         {
             m_Body = new TextureBox(i_Game, Vector3.Zero);

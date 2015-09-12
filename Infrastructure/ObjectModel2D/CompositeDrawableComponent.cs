@@ -15,42 +15,42 @@ namespace Infrastructure.ObjectModel
     /// same functionality the game object performs on components with the addition of being neutral to where it resides
     /// in the hierarchy.
     /// </summary>
-    public abstract class CompositeDrawableComponent<ComponentType> :
-        DrawableGameComponent, ICollection<ComponentType>
-        where ComponentType : IGameComponent
+    public abstract class CompositeDrawableComponent<TComponentType> :
+        DrawableGameComponent, ICollection<TComponentType>
+        where TComponentType : IGameComponent
     {
         // the entire collection, for general collection methods (count, foreach, etc.):
-        Collection<ComponentType> m_Components = new Collection<ComponentType>();
+        Collection<TComponentType> m_Components = new Collection<TComponentType>();
 
         #region Selective Collections
         // selective holders for specific operations each frame:
-        private List<ComponentType> m_UninitializedComponents = new List<ComponentType>();
+        private List<TComponentType> m_UninitializedComponents = new List<TComponentType>();
         protected List<IUpdateable> m_UpdateableComponents = new List<IUpdateable>();
         protected List<IDrawable> m_DrawableComponents = new List<IDrawable>();
         protected List<Sprite> m_Sprites = new List<Sprite>();
         #endregion //Selective Collections
 
         #region Events
-        public event EventHandler<GameComponentEventArgs<ComponentType>> ComponentAdded;
-        public event EventHandler<GameComponentEventArgs<ComponentType>> ComponentRemoved;
+        public event EventHandler<GameComponentEventArgs<TComponentType>> ComponentAdded;
+        public event EventHandler<GameComponentEventArgs<TComponentType>> ComponentRemoved;
         #endregion //Events
 
         #region Add/Remove
-        protected virtual void OnComponentAdded(GameComponentEventArgs<ComponentType> e)
+        protected virtual void OnComponentAdded(GameComponentEventArgs<TComponentType> i_)
         {
             if (m_IsInitialized)
             {
-                InitializeComponent(e.GameComponent);
+                initializeComponent(i_.GameComponent);
             }
             else
             {
-                m_UninitializedComponents.Add(e.GameComponent);
+                m_UninitializedComponents.Add(i_.GameComponent);
             }
 
             // If the new component implements IUpdateable:
             // 1. find a spot for it on the updateable list 
             // 2. hook it's UpdateOrderChanged event
-            IUpdateable updatable = e.GameComponent as IUpdateable;
+            IUpdateable updatable = i_.GameComponent as IUpdateable;
             if (updatable != null)
             {
                 insertSorted(updatable);
@@ -60,7 +60,7 @@ namespace Infrastructure.ObjectModel
             // If the new component implements IDrawable:
             // 1. find a spot for it on the drawable lists (IDrawble/Sprite) 
             // 2. hook it's DrawOrderChanged event
-            IDrawable drawable = e.GameComponent as IDrawable;
+            IDrawable drawable = i_.GameComponent as IDrawable;
             if (drawable != null)
             {
                 insertSorted(drawable);
@@ -70,25 +70,25 @@ namespace Infrastructure.ObjectModel
             // raise the Added event:
             if (ComponentAdded != null)
             {
-                ComponentAdded(this, e);
+                ComponentAdded(this, i_);
             }
         }
 
-        protected virtual void OnComponentRemoved(GameComponentEventArgs<ComponentType> e)
+        protected virtual void OnComponentRemoved(GameComponentEventArgs<TComponentType> i_)
         {
             if (!m_IsInitialized)
             {
-                m_UninitializedComponents.Remove(e.GameComponent);
+                m_UninitializedComponents.Remove(i_.GameComponent);
             }
 
-            IUpdateable updatable = e.GameComponent as IUpdateable;
+            IUpdateable updatable = i_.GameComponent as IUpdateable;
             if (updatable != null)
             {
                 m_UpdateableComponents.Remove(updatable);
                 updatable.UpdateOrderChanged -= childUpdateOrderChanged;
             }
 
-            Sprite sprite = e.GameComponent as Sprite;
+            Sprite sprite = i_.GameComponent as Sprite;
             if (sprite != null)
             {
                 m_Sprites.Remove(sprite);
@@ -97,7 +97,7 @@ namespace Infrastructure.ObjectModel
 
             else
             {
-                IDrawable drawable = e.GameComponent as IDrawable;
+                IDrawable drawable = i_.GameComponent as IDrawable;
                 if (drawable != null)
                 {
                     m_DrawableComponents.Remove(drawable);
@@ -108,7 +108,7 @@ namespace Infrastructure.ObjectModel
             // raise the Removed event:
             if (ComponentRemoved != null)
             {
-                ComponentRemoved(this, e);
+                ComponentRemoved(this, i_);
             }
         }
 
@@ -116,9 +116,9 @@ namespace Infrastructure.ObjectModel
         /// When the update order of a component in this manager changes, will need to find a new place for it
         /// on the list of updateable components.
         /// </summary>
-        private void childUpdateOrderChanged(object sender, EventArgs e)
+        private void childUpdateOrderChanged(object i_Sender, EventArgs i_)
         {
-            IUpdateable updatable = sender as IUpdateable;
+            IUpdateable updatable = i_Sender as IUpdateable;
             m_UpdateableComponents.Remove(updatable);
 
             insertSorted(updatable);
@@ -128,11 +128,11 @@ namespace Infrastructure.ObjectModel
         /// When the draw order of a component in this manager changes, will need to find a new place for it
         /// on the list of drawable components.
         /// </summary>
-        private void childDrawOrderChanged(object sender, EventArgs e)
+        private void childDrawOrderChanged(object i_Sender, EventArgs i_)
         {
-            IDrawable drawable = sender as IDrawable;
+            IDrawable drawable = i_Sender as IDrawable;
 
-            Sprite sprite = sender as Sprite;
+            Sprite sprite = i_Sender as Sprite;
             if (sprite != null)
             {
                 m_Sprites.Remove(sprite);
@@ -151,7 +151,7 @@ namespace Infrastructure.ObjectModel
 
         private void insertSorted(IUpdateable i_Updatable)
         {
-            int idx = m_UpdateableComponents.BinarySearch(i_Updatable, UpdateableComparer.Default);
+            int idx = m_UpdateableComponents.BinarySearch(i_Updatable, UpdateableComparer.r_Default);
             if (idx < 0)
             {
                 idx = ~idx;
@@ -164,7 +164,7 @@ namespace Infrastructure.ObjectModel
             Sprite sprite = i_Drawable as Sprite;
             if (sprite != null)
             {
-                int idx = m_Sprites.BinarySearch(sprite, DrawableComparer<Sprite>.Default);
+                int idx = m_Sprites.BinarySearch(sprite, DrawableComparer<Sprite>.r_Default);
                 if (idx < 0)
                 {
                     idx = ~idx;
@@ -173,7 +173,7 @@ namespace Infrastructure.ObjectModel
             }
             else
             {
-                int idx = m_DrawableComponents.BinarySearch(i_Drawable, DrawableComparer<IDrawable>.Default);
+                int idx = m_DrawableComponents.BinarySearch(i_Drawable, DrawableComparer<IDrawable>.r_Default);
                 if (idx < 0)
                 {
                     idx = ~idx;
@@ -197,7 +197,7 @@ namespace Infrastructure.ObjectModel
                 // Initialize any un-initialized game components
                 while (m_UninitializedComponents.Count > 0)
                 {
-                    InitializeComponent(m_UninitializedComponents[0]);
+                    initializeComponent(m_UninitializedComponents[0]);
                 }
 
                 base.Initialize();
@@ -206,7 +206,7 @@ namespace Infrastructure.ObjectModel
             }
         }
 
-        private void InitializeComponent(ComponentType i_Component)
+        private void initializeComponent(TComponentType i_Component)
         {
             if (i_Component is Sprite)
             {
@@ -265,9 +265,9 @@ namespace Infrastructure.ObjectModel
             m_SpriteBatch.End();
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool i_Disposing)
         {
-            if (disposing)
+            if (i_Disposing)
             {
                 // Dispose of components in this manager
                 for (int i = 0; i < Count; i++)
@@ -280,18 +280,18 @@ namespace Infrastructure.ObjectModel
                 }
             }
 
-            base.Dispose(disposing);
+            base.Dispose(i_Disposing);
         }
         #endregion //Compoiste Drawbale Component
 
         #region ICollection<ComponentType> Implementations
 
-        public virtual void Add(ComponentType i_Component)
+        public virtual void Add(TComponentType i_Component)
         {
             this.InsertItem(m_Components.Count, i_Component);
         }
 
-        protected virtual void InsertItem(int i_Idx, ComponentType i_Component)
+        protected virtual void InsertItem(int i_Idx, TComponentType i_Component)
         {
             if (m_Components.Contains(i_Component))
             {
@@ -302,7 +302,7 @@ namespace Infrastructure.ObjectModel
             {
                 m_Components.Insert(i_Idx, i_Component);
 
-                OnComponentAdded(new GameComponentEventArgs<ComponentType>(i_Component));
+                OnComponentAdded(new GameComponentEventArgs<TComponentType>(i_Component));
             }
         }
 
@@ -310,20 +310,20 @@ namespace Infrastructure.ObjectModel
         {
             for (int i = 0; i < Count; i++)
             {
-                OnComponentRemoved(new GameComponentEventArgs<ComponentType>(m_Components[i]));
+                OnComponentRemoved(new GameComponentEventArgs<TComponentType>(m_Components[i]));
             }
 
             m_Components.Clear();
         }
 
-        public bool Contains(ComponentType i_Component)
+        public bool Contains(TComponentType i_Component)
         {
             return m_Components.Contains(i_Component);
         }
 
-        public void CopyTo(ComponentType[] io_ComponentsArray, int i_ArrayIndex)
+        public void CopyTo(TComponentType[] i_IoComponentsArray, int i_ArrayIndex)
         {
-            m_Components.CopyTo(io_ComponentsArray, i_ArrayIndex);
+            m_Components.CopyTo(i_IoComponentsArray, i_ArrayIndex);
         }
 
         public int Count
@@ -336,19 +336,19 @@ namespace Infrastructure.ObjectModel
             get { return false; }
         }
 
-        public virtual bool Remove(ComponentType i_Component)
+        public virtual bool Remove(TComponentType i_Component)
         {
             bool removed = m_Components.Remove(i_Component);
 
             if (i_Component != null && removed)
             {
-                OnComponentRemoved(new GameComponentEventArgs<ComponentType>(i_Component));
+                OnComponentRemoved(new GameComponentEventArgs<TComponentType>(i_Component));
             }
 
             return removed;
         }
 
-        public IEnumerator<ComponentType> GetEnumerator()
+        public IEnumerator<TComponentType> GetEnumerator()
         {
             return m_Components.GetEnumerator();
         }
@@ -442,36 +442,36 @@ namespace Infrastructure.ObjectModel
         /// <summary>
         /// A static copy of the comparer to avoid the GC.
         /// </summary>
-        public static readonly UpdateableComparer Default;
+        public static readonly UpdateableComparer r_Default;
 
-        static UpdateableComparer() { Default = new UpdateableComparer(); }
+        static UpdateableComparer() { r_Default = new UpdateableComparer(); }
         private UpdateableComparer() { }
 
-        public int Compare(IUpdateable x, IUpdateable y)
+        public int Compare(IUpdateable i_X, IUpdateable i_Y)
         {
-            const int k_XBigger = 1;
-            const int k_Equal = 0;
-            const int k_YBigger = -1;
+            const int r_XBigger = 1;
+            const int r_Equal = 0;
+            const int r_YBigger = -1;
 
-            int retCompareResult = k_YBigger;
+            int retCompareResult = r_YBigger;
 
-            if (x == null && y == null)
+            if (i_X == null && i_Y == null)
             {
-                retCompareResult = k_Equal;
+                retCompareResult = r_Equal;
             }
-            else if (x != null)
+            else if (i_X != null)
             {
-                if (y == null)
+                if (i_Y == null)
                 {
-                    retCompareResult = k_XBigger;
+                    retCompareResult = r_XBigger;
                 }
-                else if (x.Equals(y))
+                else if (i_X.Equals(i_Y))
                 {
-                    return k_Equal;
+                    return r_Equal;
                 }
-                else if (x.UpdateOrder > y.UpdateOrder)
+                else if (i_X.UpdateOrder > i_Y.UpdateOrder)
                 {
-                    return k_XBigger;
+                    return r_XBigger;
                 }
             }
 
@@ -488,38 +488,38 @@ namespace Infrastructure.ObjectModel
         /// <summary>
         /// A static copy of the comparer to avoid the GC.
         /// </summary>
-        public static readonly DrawableComparer<TDrawble> Default;
+        public static readonly DrawableComparer<TDrawble> r_Default;
 
-        static DrawableComparer() { Default = new DrawableComparer<TDrawble>(); }
+        static DrawableComparer() { r_Default = new DrawableComparer<TDrawble>(); }
         private DrawableComparer() { }
 
         #region IComparer<IDrawable> Members
 
-        public int Compare(TDrawble x, TDrawble y)
+        public int Compare(TDrawble i_X, TDrawble i_Y)
         {
-            const int k_XBigger = 1;
-            const int k_Equal = 0;
-            const int k_YBigger = -1;
+            const int r_XBigger = 1;
+            const int r_Equal = 0;
+            const int r_YBigger = -1;
 
-            int retCompareResult = k_YBigger;
+            int retCompareResult = r_YBigger;
 
-            if (x == null && y == null)
+            if (i_X == null && i_Y == null)
             {
-                retCompareResult = k_Equal;
+                retCompareResult = r_Equal;
             }
-            else if (x != null)
+            else if (i_X != null)
             {
-                if (y == null)
+                if (i_Y == null)
                 {
-                    retCompareResult = k_XBigger;
+                    retCompareResult = r_XBigger;
                 }
-                else if (x.Equals(y))
+                else if (i_X.Equals(i_Y))
                 {
-                    return k_Equal;
+                    return r_Equal;
                 }
-                else if (x.DrawOrder > y.DrawOrder)
+                else if (i_X.DrawOrder > i_Y.DrawOrder)
                 {
-                    return k_XBigger;
+                    return r_XBigger;
                 }
             }
 
@@ -532,18 +532,18 @@ namespace Infrastructure.ObjectModel
     /// <summary>
     /// Arguments used with events from the GameComponentCollection.
     /// </summary>
-    /// <typeparam name="ComponentType"></typeparam>
-    public class GameComponentEventArgs<ComponentType> : EventArgs
-        where ComponentType : IGameComponent
+    /// <typeparam name="TComponentType"></typeparam>
+    public class GameComponentEventArgs<TComponentType> : EventArgs
+        where TComponentType : IGameComponent
     {
-        private ComponentType m_Component;
+        private TComponentType m_Component;
 
-        public GameComponentEventArgs(ComponentType gameComponent)
+        public GameComponentEventArgs(TComponentType i_GameComponent)
         {
-            m_Component = gameComponent;
+            m_Component = i_GameComponent;
         }
 
-        public ComponentType GameComponent
+        public TComponentType GameComponent
         {
             get { return m_Component; }
         }

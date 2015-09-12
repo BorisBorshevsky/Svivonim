@@ -30,7 +30,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Position = m_OriginalSpriteInfo.Position;
+            this.BoundSprite.Position = OriginalSpriteInfo.Position;
         }
 
         protected override void DoFrame(GameTime i_GameTime)

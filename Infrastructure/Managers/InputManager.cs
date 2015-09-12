@@ -87,9 +87,9 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonPressed(eInputButtons i_Buttons)
         {
-            const bool v_OneIsEnough = true;
+            const bool r_VOneIsEnough = true;
 
-            return ButtonStateChanged(i_Buttons, ButtonState.Pressed, v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Pressed, r_VOneIsEnough);
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonReleased(eInputButtons i_Buttons)
         {
-            const bool v_OneIsEnough = true;
+            const bool r_VOneIsEnough = true;
 
-            return ButtonStateChanged(i_Buttons, ButtonState.Released, v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Released, r_VOneIsEnough);
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonsPressed(eInputButtons i_Buttons)
         {
-            const bool v_OneIsEnough = true;
+            const bool r_VOneIsEnough = true;
 
-            return ButtonStateChanged(i_Buttons, ButtonState.Pressed, !v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Pressed, !r_VOneIsEnough);
         }
 
         /// <summary>
@@ -144,9 +144,9 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonsReleased(eInputButtons i_Buttons)
         {
-            const bool v_OneIsEnough = true;
+            const bool r_VOneIsEnough = true;
 
-            return ButtonStateChanged(i_Buttons, ButtonState.Released, !v_OneIsEnough);
+            return ButtonStateChanged(i_Buttons, ButtonState.Released, !r_VOneIsEnough);
         }
 
         /// <summary>
@@ -159,8 +159,8 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonIsDown(eInputButtons i_MouseButtons)
         {
-            const bool v_OneIsEnough = true;
-            return checkButtonsState(i_MouseButtons, ButtonState.Pressed, v_OneIsEnough);
+            const bool r_VOneIsEnough = true;
+            return checkButtonsState(i_MouseButtons, ButtonState.Pressed, r_VOneIsEnough);
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonsAreDown(eInputButtons i_MouseButtons)
         {
-            const bool v_OneIsEnough = true;
-            return checkButtonsState(i_MouseButtons, ButtonState.Pressed, !v_OneIsEnough);
+            const bool r_VOneIsEnough = true;
+            return checkButtonsState(i_MouseButtons, ButtonState.Pressed, !r_VOneIsEnough);
         }
 
         /// <summary>
@@ -187,8 +187,8 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonIsUp(eInputButtons i_MouseButtons)
         {
-            const bool v_OneIsEnough = true;
-            return checkButtonsState(i_MouseButtons, ButtonState.Released, v_OneIsEnough);
+            const bool r_VOneIsEnough = true;
+            return checkButtonsState(i_MouseButtons, ButtonState.Released, r_VOneIsEnough);
         }
 
         /// <summary>
@@ -201,8 +201,8 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonsAreUp(eInputButtons i_MouseButtons)
         {
-            const bool v_OneIsEnough = true;
-            return checkButtonsState(i_MouseButtons, ButtonState.Released, !v_OneIsEnough);
+            const bool r_VOneIsEnough = true;
+            return checkButtonsState(i_MouseButtons, ButtonState.Released, !r_VOneIsEnough);
         }
 
         public Vector2 MousePositionDelta
@@ -301,24 +301,24 @@ namespace Infrastructure.Managers
         /// </returns>
         public bool ButtonStateChanged(eInputButtons i_Buttons)
         {
-            const bool v_OneIsEnough = true;
+            const bool r_VOneIsEnough = true;
 
-            return ButtonStateChanged(i_Buttons, ButtonState.Released, v_OneIsEnough)
+            return ButtonStateChanged(i_Buttons, ButtonState.Released, r_VOneIsEnough)
                    ||
-                   ButtonStateChanged(i_Buttons, ButtonState.Pressed, v_OneIsEnough);
+                   ButtonStateChanged(i_Buttons, ButtonState.Pressed, r_VOneIsEnough);
         }
 
         private bool ButtonStateChanged(eInputButtons i_Buttons, ButtonState i_ButtonState, bool i_IsOneEnough)
         {
-            const bool v_CheckChanged = true;
+            const bool r_VCheckChanged = true;
 
-            return checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, v_CheckChanged);
+            return checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, r_VCheckChanged);
         }
 
         private bool checkButtonsState(eInputButtons i_Buttons, ButtonState i_ButtonState, bool i_IsOneEnough)
         {
-            const bool v_CheckChanged = true;
-            return checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, !v_CheckChanged);
+            const bool r_VCheckChanged = true;
+            return checkButtonsState(i_Buttons, i_ButtonState, i_IsOneEnough, !r_VCheckChanged);
         }
 
         private bool checkButtonsState(eInputButtons i_Buttons, ButtonState i_ButtonState, bool i_IsOneEnough,

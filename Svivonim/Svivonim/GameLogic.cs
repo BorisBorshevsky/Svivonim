@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Dreidels.ObjectModel;
 using Infrastructure.Common;
 using Infrastructure.ObjectModel;
@@ -14,25 +12,21 @@ namespace Dreidels
     class GameLogic : RegisteredComponent
     {
         private IInputManager m_InputManager;
-        private readonly List<DreidelBase> r_Dradels = new List<DreidelBase>();
+        private DradleSide m_ChosenLetter = DradleSide.Unknown;
+
         private int m_SpinningDradles = 0;
-        private Dictionary<Keys, eDradleSide> m_DreidelLettersKeys;
         private int m_Score = 0;
-        private eDradleSide m_ChosenLetter = eDradleSide.UNKNOWN;
 
-        private List<Vector3> m_PossiblePossitions = new List<Vector3>();
-        private static readonly Random sr_Random = new Random();
+        private static readonly Random r_Random = new Random();
 
-
-
-
+        private readonly Dictionary<Keys, DradleSide> r_DreidelLettersKeys = new Dictionary<Keys, DradleSide>();
+        private readonly List<DreidelBase> r_Dradels = new List<DreidelBase>();
+        private readonly List<Vector3> r_PossiblePossitions = new List<Vector3>();
 
 
         public GameLogic(Game i_Game)
             : base(i_Game)
-        {
-            
-        }
+        { }
 
         private void initializeRandomPositions()
         {
@@ -40,14 +34,14 @@ namespace Dreidels
             {
                 for (int y = -10; y <= 10; y += 5)
                 {
-                    m_PossiblePossitions.Add(new Vector3(x, y, sr_Random.Next(-20, 20)));
+                    r_PossiblePossitions.Add(new Vector3(x, y, r_Random.Next(-20, 20)));
                 }
             }
         }
 
         public bool CanSpin
         {
-            get { return m_SpinningDradles == 0 && m_ChosenLetter != eDradleSide.UNKNOWN; }
+            get { return m_SpinningDradles == 0 && m_ChosenLetter != DradleSide.Unknown; }
         }
 
         public override void Update(GameTime i_GameTime)
@@ -56,11 +50,11 @@ namespace Dreidels
 
             if (m_SpinningDradles == 0)
             {
-                foreach (Keys key in m_DreidelLettersKeys.Keys)
+                foreach (Keys key in r_DreidelLettersKeys.Keys)
                 {
                     if (m_InputManager.KeyPressed(key))
                     {
-                        m_ChosenLetter = m_DreidelLettersKeys[key];
+                        m_ChosenLetter = r_DreidelLettersKeys[key];
                     }
                 }
             }
@@ -80,6 +74,7 @@ namespace Dreidels
         public override void Initialize()
         {
             base.Initialize();
+            
             m_InputManager = Game.Services.GetService<IInputManager>();
             
             initializeRandomPositions();
@@ -89,37 +84,37 @@ namespace Dreidels
 
         private void initializeDradles()
         {
+            r_Dradels.Add(new PositionColorDradle(Game, getRandomPosition()));
+            r_Dradels.Add(new TriangleStripDradle(Game, getRandomPosition()));
+            r_Dradels.Add(new VertexBufferDradle(Game, getRandomPosition()));
+            r_Dradels.Add(new PositionColorDradle(Game, getRandomPosition()));
+            r_Dradels.Add(new TriangleStripDradle(Game, getRandomPosition()));
+            r_Dradels.Add(new VertexBufferDradle(Game, getRandomPosition()));
 
-            getRandomPosition();
-
-            r_Dradels.Add(new Dreidel1(Game, getRandomPosition()));
-            r_Dradels.Add(new Dreidel2(Game, getRandomPosition()));
-            r_Dradels.Add(new Dreidel3(Game, getRandomPosition()));
-            r_Dradels.Add(new Dreidel1(Game, getRandomPosition()));
-            r_Dradels.Add(new Dreidel2(Game, getRandomPosition()));
-            r_Dradels.Add(new Dreidel3(Game, getRandomPosition()));
-
-            r_Dradels.ForEach(i_Dreidel => i_Dreidel.Stopped += dreidelOnStopped);
+            r_Dradels.ForEach(i_Dreidel =>
+            {
+                i_Dreidel.Initialize();
+                i_Dreidel.Stopped += dreidelOnStopped;
+            });
         }
 
         private Vector3 getRandomPosition()
         {
-            var item = sr_Random.Next(0, m_PossiblePossitions.Count);
-            var randomPosition = m_PossiblePossitions[item];
-            m_PossiblePossitions.RemoveAt(item);
+            int item = r_Random.Next(0, r_PossiblePossitions.Count);
+            Vector3 randomPosition = r_PossiblePossitions[item];
+            r_PossiblePossitions.RemoveAt(item);
             return randomPosition;
         }
 
         private void initializeLetters()
         {
-            m_DreidelLettersKeys = new Dictionary<Keys, eDradleSide>();
-            m_DreidelLettersKeys.Add(Keys.B, eDradleSide.NUN);
-            m_DreidelLettersKeys.Add(Keys.D, eDradleSide.GIMEL);
-            m_DreidelLettersKeys.Add(Keys.V, eDradleSide.HEY);
-            m_DreidelLettersKeys.Add(Keys.P, eDradleSide.PEY);
+            r_DreidelLettersKeys.Add(Keys.B, DradleSide.Nun);
+            r_DreidelLettersKeys.Add(Keys.D, DradleSide.Gimel);
+            r_DreidelLettersKeys.Add(Keys.V, DradleSide.Hey);
+            r_DreidelLettersKeys.Add(Keys.P, DradleSide.Pey);
         }
 
-        private void dreidelOnStopped(eDradleSide i_DreidelSide)
+        private void dreidelOnStopped(DradleSide i_DreidelSide)
         {
             m_SpinningDradles--;
 
@@ -130,9 +125,8 @@ namespace Dreidels
 
             if (m_SpinningDradles == 0)
             {
-                m_ChosenLetter = eDradleSide.UNKNOWN; ;
+                m_ChosenLetter = DradleSide.Unknown; ;
             }
-
         }
     }
 }

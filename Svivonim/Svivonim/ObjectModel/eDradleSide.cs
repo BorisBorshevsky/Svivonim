@@ -2,17 +2,17 @@
 
 namespace Dreidels.ObjectModel
 {
-    enum eDradleSide
+    enum DradleSide
     {
         [Description("Not Chosen yet")]
-        UNKNOWN,
+        Unknown,
         [Description("נ")]
-        NUN,
+        Nun,
         [Description("ג")]
-        GIMEL,
+        Gimel,
         [Description("ה")]
-        HEY,
+        Hey,
         [Description("פ")]
-        PEY
+        Pey
     }
 }

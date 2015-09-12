@@ -1,5 +1,4 @@
-﻿using Dreidels.ObjectModel;
-using Dreidels.ObjectModel.Services;
+﻿using Dreidels.ObjectModel.Services;
 using Infrastructure.Managers;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
@@ -11,41 +10,32 @@ namespace Dreidels
     /// </summary>
     public class DreidelsGame : Game
     {
-        GraphicsDeviceManager graphics;
+        GraphicsDeviceManager m_Graphics;
 
 
-        private readonly CameraManager r_CameraManager;
+        private readonly ICameraManager r_CameraManager;
         private IInputManager m_InputManager;
-        private GameLogic r_GameLogic;
+        private GameLogic m_GameLogic;
 
 
         public DreidelsGame()
         {
-            graphics = new GraphicsDeviceManager(this);
+            m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             //initialize services
             r_CameraManager = new CameraManager(this);
             m_InputManager = new InputManager(this);
 
-            r_GameLogic = new GameLogic(this);
+            m_GameLogic = new GameLogic(this);
 
         }
 
-        protected override void Initialize()
-        {
-            r_CameraManager.SetCameraSettings();
-            r_CameraManager.SetCameraState();
-
-            base.Initialize();
-        }
-
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime i_GameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             
-
-            base.Draw(gameTime);
+            base.Draw(i_GameTime);
         }
     }
 }

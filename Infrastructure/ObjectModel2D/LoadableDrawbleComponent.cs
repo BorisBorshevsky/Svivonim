@@ -14,7 +14,7 @@ namespace Infrastructure.ObjectModel
         // used to load the sprite:
         protected ContentManager ContentManager
         {
-            get { return this.Game.Content; }
+            get { return Game.Content; }
         }
 
         public event PositionChangedEventHandler PositionChanged;

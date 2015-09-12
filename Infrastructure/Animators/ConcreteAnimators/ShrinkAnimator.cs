@@ -17,12 +17,12 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            this.BoundSprite.Scales -= new Vector2((float)i_GameTime.ElapsedGameTime.TotalSeconds / (float)AnimationLength.TotalSeconds);
+            BoundSprite.Scales -= new Vector2((float)i_GameTime.ElapsedGameTime.TotalSeconds / (float)AnimationLength.TotalSeconds);
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Scales = m_OriginalSpriteInfo.Scales;
+            BoundSprite.Scales = OriginalSpriteInfo.Scales;
         }
     }
 }

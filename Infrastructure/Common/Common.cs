@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Reflection;
-using System.Text;
 
 namespace Infrastructure.Common
 {
     public static class Common
     {
-        public static string GetDescription<T>(this T source)
+        public static string GetDescription<T>(this T i_Source)
         {
             string result;
-            FieldInfo fieldInfo = source.GetType().GetField(source.ToString());
+            FieldInfo fieldInfo = i_Source.GetType().GetField(i_Source.ToString());
 
             DescriptionAttribute[] attributes = fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
 
@@ -22,7 +18,7 @@ namespace Infrastructure.Common
             }
             else
             {
-                result = source.ToString();
+                result = i_Source.ToString();
             }
 
             return result;

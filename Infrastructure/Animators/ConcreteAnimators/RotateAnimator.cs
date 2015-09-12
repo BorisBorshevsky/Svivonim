@@ -12,7 +12,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
         public RotateAnimator(string i_Name, float i_RotationVelocity, TimeSpan i_AnimationLength)
             : base(i_Name, i_AnimationLength)
         {
-            this.r_RotationVelocity = i_RotationVelocity;
+            r_RotationVelocity = i_RotationVelocity;
         }
 
         public RotateAnimator(float i_RotationVelocity, TimeSpan i_AnimationLength)
@@ -28,12 +28,12 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void DoFrame(GameTime i_GameTime)
         {
-            this.BoundSprite.Rotation += (float)i_GameTime.ElapsedGameTime.TotalSeconds * r_RotationVelocity;
+            BoundSprite.Rotation += (float)i_GameTime.ElapsedGameTime.TotalSeconds * r_RotationVelocity;
         }
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Rotation = m_OriginalSpriteInfo.Rotation;
+            this.BoundSprite.Rotation = OriginalSpriteInfo.Rotation;
         }
     }
 }

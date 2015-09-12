@@ -35,9 +35,9 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Scales = m_OriginalSpriteInfo.Scales;
+            this.BoundSprite.Scales = OriginalSpriteInfo.Scales;
 
-            m_SourceScale = m_OriginalSpriteInfo.Scales.X;
+            m_SourceScale = OriginalSpriteInfo.Scales.X;
             m_TargetScale = m_Scale;
             m_DeltaScale = m_TargetScale - m_SourceScale;
             m_Shrinking = m_DeltaScale < 0;

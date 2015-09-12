@@ -40,7 +40,7 @@ namespace Infrastructure.Managers
 
             if (!this.Contains(i_GameScreen))
             {
-                this.Add(i_GameScreen);
+                this.add(i_GameScreen);
 
                 // let me know when you are closed, so i can pop you from the stack:
                 i_GameScreen.StateChanged += Screen_StateChanged;
@@ -65,9 +65,9 @@ namespace Infrastructure.Managers
             i_GameScreen.DrawOrder = r_ScreensStack.Count;
         }
 
-        private void Screen_StateChanged(object sender, StateChangedEventArgs e)
+        private void Screen_StateChanged(object i_Sender, StateChangedEventArgs i_)
         {
-            switch (e.CurrentState)
+            switch (i_.CurrentState)
             {
                 case eScreenState.Activating:
                     break;
@@ -76,18 +76,18 @@ namespace Infrastructure.Managers
                 case eScreenState.Deactivating:
                     break;
                 case eScreenState.Closing:
-                    pop(sender as GameScreen);
+                    pop(i_Sender as GameScreen);
                     break;
                 case eScreenState.Inactive:
                     break;
                 case eScreenState.Closed:
-                    Remove(sender as GameScreen);
+                    remove(i_Sender as GameScreen);
                     break;
                 default:
                     break;
             }
 
-            OnScreenStateChanged(sender, e);
+            OnScreenStateChanged(i_Sender, i_);
         }
 
         private void pop(GameScreen i_GameScreen)
@@ -101,30 +101,30 @@ namespace Infrastructure.Managers
             }
         }
 
-        private new bool Remove(GameScreen i_Screen)
+        private new bool remove(GameScreen i_Screen)
         {
             return base.Remove(i_Screen);
         }
 
-        private new void Add(GameScreen i_Component)
+        private new void add(GameScreen i_Component)
         {
             base.Add(i_Component);
         }
 
         public event EventHandler<StateChangedEventArgs> ScreenStateChanged;
-        protected virtual void OnScreenStateChanged(object sender, StateChangedEventArgs e)
+        protected virtual void OnScreenStateChanged(object i_Sender, StateChangedEventArgs i_)
         {
             if (ScreenStateChanged != null)
             {
-                ScreenStateChanged(sender, e);
+                ScreenStateChanged(i_Sender, i_);
             }
         }
 
-        protected override void OnComponentRemoved(GameComponentEventArgs<GameScreen> e)
+        protected override void OnComponentRemoved(GameComponentEventArgs<GameScreen> i_)
         {
-            base.OnComponentRemoved(e);
+            base.OnComponentRemoved(i_);
 
-            e.GameComponent.StateChanged -= Screen_StateChanged;
+            i_.GameComponent.StateChanged -= Screen_StateChanged;
 
             if (r_ScreensStack.Count == 0)
             {

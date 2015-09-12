@@ -6,32 +6,29 @@ namespace Dreidels.ObjectModel
     class Stick : Box
     {
         private VertexPositionColor[] m_ColorVertices;
-        private short[] m_Indices;
-        private Color m_Color;
+        private readonly Color r_Color;
 
-        public Stick(Game i_Game, Color i_Color, Vector3 Position) : this(i_Game, i_Color, Position, Vector3.One)
+        public Stick(Game i_Game, Color i_Color, Vector3 i_Position) : this(i_Game, i_Color, i_Position, Vector3.One)
         {
         }
 
-        public Stick(Game i_Game, Color i_Color, Vector3 Position, Vector3 Scale) : base(i_Game, Position, Scale)
+        public Stick(Game i_Game, Color i_Color, Vector3 i_Position, Vector3 i_Scale) : base(i_Game, i_Position, i_Scale)
         {
-            m_Color = i_Color;
+            r_Color = i_Color;
         }
 
         protected override void LoadContent()
         {
             base.LoadContent();
-
-            m_BasicEffect = new BasicEffect(this.GraphicsDevice);
+            m_BasicEffect = m_BasicEffect ?? new BasicEffect(this.GraphicsDevice);
             m_BasicEffect.VertexColorEnabled = true;
 
-            m_VerticesCoordinates = createStartCoordinates();
+            m_VerticesCoordinates = CreateStartCoordinates();
+            
             m_ColorVertices = CreateColorVertices();
-
             m_VertexBuffer = new VertexBuffer(this.GraphicsDevice, typeof(VertexPositionColor), m_ColorVertices.Length, BufferUsage.WriteOnly);
 
-            m_Indices = createIndicesMapping();
-
+            m_Indices = CreateIndicesMapping();
             m_IndexBuffer = new IndexBuffer(this.GraphicsDevice, typeof(short), m_Indices.Length, BufferUsage.WriteOnly);
 
         }
@@ -42,13 +39,13 @@ namespace Dreidels.ObjectModel
             var textureVerticale = new VertexPositionColor[8];
             for (int i = 0; i < 8; i++)
             {
-                textureVerticale[i] = new VertexPositionColor(m_VerticesCoordinates[i], m_Color); 
+                textureVerticale[i] = new VertexPositionColor(m_VerticesCoordinates[i], r_Color); 
             }
             
             return textureVerticale;
         }
 
-        protected override short[] createIndicesMapping()
+        protected override short[] CreateIndicesMapping()
         {
             short[] indices = new short[36];
             // Front face
@@ -105,28 +102,22 @@ namespace Dreidels.ObjectModel
 
         public override void Draw(GameTime i_GameTime)
         {
-            m_BasicEffect.Projection = m_CameraManager.CameraSettings;
-            m_BasicEffect.View = m_CameraManager.CameraState;
-
-            m_IndexBuffer.SetData(m_Indices);
-            m_VertexBuffer.SetData(m_ColorVertices, 0, m_ColorVertices.Length);
-
-            m_BasicEffect.GraphicsDevice.Indices = m_IndexBuffer;
-            m_BasicEffect.GraphicsDevice.SetVertexBuffer(m_VertexBuffer);
-            m_BasicEffect.GraphicsDevice.RasterizerState = r_RasterizerState;
-            m_BasicEffect.World = m_WorldMatrix;
-
-
-
+            base.Draw(i_GameTime);
+            
+            setBuffers();
             foreach (var pass in m_BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 m_BasicEffect.GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, m_VertexBuffer.VertexCount, 0, m_IndexBuffer.IndexCount / 3);
-
             }
+        }
 
-
-            base.Draw(i_GameTime);
+        private void setBuffers()
+        {
+            m_IndexBuffer.SetData(m_Indices);
+            m_VertexBuffer.SetData(m_ColorVertices, 0, m_ColorVertices.Length);
+            m_BasicEffect.GraphicsDevice.Indices = m_IndexBuffer;
+            m_BasicEffect.GraphicsDevice.SetVertexBuffer(m_VertexBuffer);
         }
     }
 }

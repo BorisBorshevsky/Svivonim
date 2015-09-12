@@ -64,9 +64,9 @@ namespace Infrastructure.Managers
             }
         }
 
-        private void collidable_Disposed(object sender, EventArgs e)
+        private void collidable_Disposed(object i_Sender, EventArgs i_)
         {
-            ICollidable collidable = sender as ICollidable;
+            ICollidable collidable = i_Sender as ICollidable;
 
             if (collidable != null
                 &&

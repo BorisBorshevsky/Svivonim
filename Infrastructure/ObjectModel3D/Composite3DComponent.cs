@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Infrastructure.ObjectModel3D;
 using Microsoft.Xna.Framework;
 
 namespace Dreidels.ObjectModel
 {
-    class Composite3DComponent : Base3DElement
+    public class Composite3DComponent : Base3DElement
     {
         readonly List<Base3DElement> r_Components = new List<Base3DElement>(); 
         
         public Composite3DComponent(Game i_Game) : base(i_Game)
         {
-            i_Game.Components.Add(this);
+//            
         }
         public void Add(Base3DElement i_Element)
         {
@@ -22,7 +23,6 @@ namespace Dreidels.ObjectModel
                 i_Element.Scales = Scales;
                 i_Element.Position = Position;
                 i_Element.SpinEnabled = SpinEnabled;
-
             }
         }
 
@@ -34,27 +34,27 @@ namespace Dreidels.ObjectModel
             r_Components.ForEach(i_Element => i_Element.Initialize());
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime i_GameTime)
         {
-            base.Update(gameTime);
-            r_Components.ForEach(i_Element => i_Element.Update(gameTime));
+            base.Update(i_GameTime);
+            r_Components.ForEach(i_Element => i_Element.Update(i_GameTime));
         }
 
-        protected override Vector3[] createStartCoordinates()
+        protected override Vector3[] CreateStartCoordinates()
         {
             throw new InvalidOperationException();
         }
 
-        protected override short[] createIndicesMapping()
+        protected override short[] CreateIndicesMapping()
         {
             throw new InvalidOperationException();
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime i_GameTime)
         {
-            base.Draw(gameTime);
+            base.Draw(i_GameTime);
             
-            r_Components.ForEach(i_Element => i_Element.Draw(gameTime));
+            r_Components.ForEach(i_Element => i_Element.Draw(i_GameTime));
         }
 
         public override bool SpinEnabled

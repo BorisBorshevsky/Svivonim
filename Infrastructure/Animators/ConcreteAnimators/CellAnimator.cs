@@ -42,7 +42,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.SourceRectangle = m_OriginalSpriteInfo.SourceRectangle;
+            this.BoundSprite.SourceRectangle = OriginalSpriteInfo.SourceRectangle;
         }
 
         protected override void DoFrame(GameTime i_GameTime)

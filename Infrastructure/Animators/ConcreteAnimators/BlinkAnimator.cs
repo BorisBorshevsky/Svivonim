@@ -44,7 +44,7 @@ namespace Infrastructure.Animators.ConcreteAnimators
 
         protected override void RevertToOriginal()
         {
-            this.BoundSprite.Visible = m_OriginalSpriteInfo.Visible;
+            this.BoundSprite.Visible = OriginalSpriteInfo.Visible;
         }
     }
 }

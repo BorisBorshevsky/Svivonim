@@ -38,42 +38,20 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Svivonim.cs.old" />
     <Compile Include="DreidelsGame.cs" />
     <Compile Include="GameLogic.cs" />
-    <Compile Include="ObjectModel\Base3DElement.cs" />
     <Compile Include="ObjectModel\Box.cs" />
-    <Compile Include="ObjectModel\Dreidel2.cs" />
-    <Compile Include="ObjectModel\Services\CameraManager.cs" />
-    <Compile Include="ObjectModel\Composite3DComponent.cs" />
-    <Compile Include="ObjectModel\Dreidel1.cs" />
+    <Compile Include="ObjectModel\TriangleStripDradle.cs" />
+    <Compile Include="ObjectModel\PositionColorDradle.cs" />
     <Compile Include="ObjectModel\DreidelBase.cs" />
-    <Compile Include="ObjectModel\Dreidel3.cs" />
+    <Compile Include="ObjectModel\VertexBufferDradle.cs" />
     <Compile Include="ObjectModel\eDradleSide.cs" />
     <Compile Include="ObjectModel\Pyramid.cs" />
-    <Compile Include="ObjectModel\Services\ICameraManager.cs" />
     <Compile Include="ObjectModel\Stick.cs" />
     <Compile Include="ObjectModel\ColorBox.cs" />
     <Compile Include="ObjectModel\SideWall.cs" />
-    <Compile Include="ObjectModel\TextureBoxStrip.cs" />
+    <Compile Include="ObjectModel\TextureTriangleStripBox.cs" />
     <Compile Include="ObjectModel\TextureBox.cs" />
-    <Content Include="ObjectModel\Structured\BaseDrawableComponent.cs.txt" />
-    <Content Include="ObjectModel\Structured\Box.cs.txt" />
-    <Content Include="ObjectModel\Structured\CompositeGameComponent.cs.txt" />
-    <Content Include="ObjectModel\Structured\Cube.cs.txt" />
-    <Content Include="ObjectModel\Structured\CubePosition.cs.txt" />
-    <Content Include="ObjectModel\Structured\CubeTexture.cs.txt" />
-    <Content Include="ObjectModel\Structured\Dreidel.cs.txt" />
-    <Content Include="ObjectModel\Structured\DreidelLetters.cs.txt" />
-    <Content Include="ObjectModel\Structured\DreidlModel.cs.txt" />
-    <Content Include="ObjectModel\Structured\PositionDreidel.cs.txt" />
-    <Content Include="ObjectModel\Structured\Pyramid.cs.txt" />
-    <Content Include="ObjectModel\Structured\TextureDreidel.cs.txt" />
-    <Content Include="ObjectModel\Structured\TriangleHolder.cs.txt" />
-    <Content Include="ObjectModel\Structured\Camera.cs.txt" />
-    <Content Include="ObjectModel\Structured\IDreidel.cs.txt" />
-    <Content Include="ObjectModel\Structured\DreidelGame.cs.txt" />
-    <Content Include="ObjectModel\Structured\ScoreManager.cs.txt" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -69,15 +69,15 @@ namespace Infrastructure.ObjectModel.Screens
                 {
                     StateChangedEventArgs args = new StateChangedEventArgs(m_State, value);
                     m_State = value;
-                    OnStateChanged(args);
+                    onStateChanged(args);
                 }
             }
         }
 
         public event EventHandler<StateChangedEventArgs> StateChanged;
-        private void OnStateChanged(StateChangedEventArgs args)
+        private void onStateChanged(StateChangedEventArgs i_Args)
         {
-            switch (args.CurrentState)
+            switch (i_Args.CurrentState)
             {
                 case eScreenState.Activating:
                     OnActivating();
@@ -99,7 +99,7 @@ namespace Infrastructure.ObjectModel.Screens
 
             if (StateChanged != null)
             {
-                StateChanged(this, args);
+                StateChanged(this, i_Args);
             }
         }
 
@@ -358,7 +358,7 @@ namespace Infrastructure.ObjectModel.Screens
                 case eScreenState.Activating:
                 case eScreenState.Deactivating:
                 case eScreenState.Closing:
-                    UpdateTransition(i_GameTime);
+                    updateTransition(i_GameTime);
                     break;
                 case eScreenState.Active:
                     break;
@@ -383,7 +383,7 @@ namespace Infrastructure.ObjectModel.Screens
         /// <summary>
         /// Helper for updating the screen transition position.
         /// </summary>
-        void UpdateTransition(GameTime i_GameTime)
+        void updateTransition(GameTime i_GameTime)
         {
             bool transionEnded = false;
 
@@ -418,11 +418,11 @@ namespace Infrastructure.ObjectModel.Screens
 
             if (transionEnded)
             {
-                OnTransitionEnded();
+                onTransitionEnded();
             }
         }
 
-        private void OnTransitionEnded()
+        private void onTransitionEnded()
         {
             switch (this.State)
             {

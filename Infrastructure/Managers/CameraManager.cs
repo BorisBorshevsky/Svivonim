@@ -1,15 +1,16 @@
-﻿using Infrastructure.ObjectModel;
+﻿using Dreidels.ObjectModel.Services;
+using Infrastructure.ObjectModel;
 using Infrastructure.ServiceInterfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Dreidels.ObjectModel.Services
+namespace Infrastructure.Managers
 {
-    class CameraManager : GameService , ICameraManager
+    public class CameraManager : GameService , ICameraManager
 
     {
         private const float k_NearPlaneDistance = 0.5f;
-        private const float k_FarPlaneDistance = 1000.0f;
+        private const float k_FarPlaneDistance = 500.0f;
         private const float k_ViewAngle = MathHelper.PiOver4;
         private const float k_MovementSpeed = 20;
 
@@ -27,6 +28,8 @@ namespace Dreidels.ObjectModel.Services
         public override void Initialize()
         {
             m_InputManager = Game.Services.GetService<IInputManager>();
+            SetCameraSettings();
+            SetCameraState();
             base.Initialize();
         }
 
@@ -43,26 +46,26 @@ namespace Dreidels.ObjectModel.Services
             CameraSettings = Matrix.CreatePerspectiveFieldOfView(k_ViewAngle,Game.GraphicsDevice.Viewport.AspectRatio,k_NearPlaneDistance,k_FarPlaneDistance);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime i_GameTime)
         {
             if (m_InputManager.KeyHeld(Keys.Left))
             {
-                m_CameraLocation = new Vector3((float)(m_CameraLocation.X - gameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed), m_CameraLocation.Y, m_CameraLocation.Z);
+                m_CameraLocation = new Vector3((float)(m_CameraLocation.X - i_GameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed), m_CameraLocation.Y, m_CameraLocation.Z);
             }
 
             if (m_InputManager.KeyHeld(Keys.Right))
             {
-                m_CameraLocation = new Vector3((float)(m_CameraLocation.X + gameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed), m_CameraLocation.Y, m_CameraLocation.Z);
+                m_CameraLocation = new Vector3((float)(m_CameraLocation.X + i_GameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed), m_CameraLocation.Y, m_CameraLocation.Z);
             }
 
             if (m_InputManager.KeyHeld(Keys.Up))
             {
-                m_CameraLocation = new Vector3((float)(m_CameraLocation.X), m_CameraLocation.Y, (float)(m_CameraLocation.Z + gameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed));
+                m_CameraLocation = new Vector3((float)(m_CameraLocation.X), m_CameraLocation.Y, (float)(m_CameraLocation.Z + i_GameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed));
             }
 
             if (m_InputManager.KeyHeld(Keys.Down))
             {
-                m_CameraLocation = new Vector3((float)(m_CameraLocation.X), m_CameraLocation.Y, (float)(m_CameraLocation.Z - gameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed));
+                m_CameraLocation = new Vector3((float)(m_CameraLocation.X), m_CameraLocation.Y, (float)(m_CameraLocation.Z - i_GameTime.ElapsedGameTime.TotalSeconds * k_MovementSpeed));
             }
 
             SetCameraState();
@@ -70,7 +73,6 @@ namespace Dreidels.ObjectModel.Services
 
         public void SetCameraState()
         {
-            // we are storing the camera state data in a matrix:
             CameraState = Matrix.CreateLookAt(m_CameraLocation, r_CameraLooksAt, r_CameraUpDirection);
         }
 

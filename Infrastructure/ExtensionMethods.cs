@@ -4,19 +4,19 @@ namespace Infrastructure
 {
     internal static class ExtensionMethods
     {
-        private static readonly ArgumentOutOfRangeException sr_ArgumentOutOfRangeException =
+        private static readonly ArgumentOutOfRangeException r_ArgumentOutOfRangeException =
             new ArgumentOutOfRangeException();
 
-        public static bool IsInRange(this float s_TheNum, float i_Low, float i_High)
+        public static bool IsInRange(this float i_STheNum, float i_Low, float i_High)
         {
-            return s_TheNum <= i_High && s_TheNum >= i_Low;
+            return i_STheNum <= i_High && i_STheNum >= i_Low;
         }
 
-        public static void ThrowIfNotInRange(this float s_TheNum, float i_Low, float i_High)
+        public static void ThrowIfNotInRange(this float i_STheNum, float i_Low, float i_High)
         {
-            if (s_TheNum > i_High || s_TheNum < i_Low)
+            if (i_STheNum > i_High || i_STheNum < i_Low)
             {
-                throw sr_ArgumentOutOfRangeException;
+                throw r_ArgumentOutOfRangeException;
             }
         }
     }

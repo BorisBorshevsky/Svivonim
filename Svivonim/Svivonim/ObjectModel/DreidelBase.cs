@@ -1,4 +1,5 @@
 ﻿using System;
+using Infrastructure.ObjectModel3D;
 using Microsoft.Xna.Framework;
 
 namespace Dreidels.ObjectModel
@@ -9,10 +10,15 @@ namespace Dreidels.ObjectModel
         protected Base3DElement m_Pyramid;
         protected Base3DElement m_Stick;
         static readonly Random sr_Random = new Random();
+        private float m_StartRotationPerSecond;
+        private const int k_MinRoundsPerSecond = 3000; //devided by 1000
+        private const int k_MaxRoundsPerSecond = 10000;
 
         protected DreidelBase(Game i_Game, Vector3 i_Position, Color i_StickColor)
             : base(i_Game)
         {
+            i_Game.Components.Add(this);
+
             Position = i_Position;
             m_Pyramid = new Pyramid(i_Game);
             Add(m_Pyramid);
@@ -20,12 +26,11 @@ namespace Dreidels.ObjectModel
             Add(m_Stick);
         }
 
-        public event Action<eDradleSide> Stopped;
+        public event Action<DradleSide> Stopped;
 
         private void onStop()
         {
-            SpinEnabled = false;;
-
+            SpinEnabled = false;
 
             if (Stopped != null)
             {
@@ -35,103 +40,52 @@ namespace Dreidels.ObjectModel
 
         public void StartSpinning()
         {
-            startRotationPerSecond = (float)sr_Random.Next(300, 1000) / 100;
-            RotationsPerSecond = startRotationPerSecond;
+            m_StartRotationPerSecond = (float)sr_Random.Next(k_MinRoundsPerSecond, k_MaxRoundsPerSecond) / 1000;
+            RotationsPerSecond = m_StartRotationPerSecond;
             SpinEnabled = true;
         }
 
-        private float startRotationPerSecond;
 
-
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime i_GameTime)
         {
-            if (!temp)
+            base.Update(i_GameTime);
+
+            if (SpinEnabled)
             {
-                Console.WriteLine(Rotations.Y % MathHelper.TwoPi);
-                temp = true;
-            }
+                RotationsPerSecond -= (float)i_GameTime.ElapsedGameTime.TotalSeconds;
 
-
-            base.Update(gameTime);
-
-            if (SpinEnabled) { 
-//                if (RotationsPerSecond > MathHelper.PiOver2)
-//                {
-                    RotationsPerSecond -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-//                }
-//                else if (Rotations.Y % MathHelper.PiOver2 < 0.4)
-//                {
-//                    RotationsPerSecond -= (float)gameTime.ElapsedGameTime.TotalSeconds * 5;
-//                }
-
-
-                
-                
                 if (RotationsPerSecond <= 0)
                 {
-                    Console.WriteLine("Y: " + Rotations.Y + " delta: " + Rotations.Y % MathHelper.TwoPi);
-                    Console.WriteLine(GetLetter());
                     onStop();
                 }
             }
 
         }
 
-        private bool temp = false;
 
-        public eDradleSide GetLetter()
+        public DradleSide GetLetter()
         {
-            eDradleSide dradleSide;
+            DradleSide dradleSide = DradleSide.Unknown;
 
-            float rotationY = Rotations.Y % MathHelper.Pi;
-            int x = 0;
-//            while (rotationY - MathHelper.PiOver2 > 0)
-//            {
-//                rotationY -= MathHelper.PiOver2;
-//                x++;
-//            }
-            rotationY *= 2;
+            float rotationY = Rotations.Y % MathHelper.TwoPi;
 
-            if (rotationY < MathHelper.PiOver4)
+            if (rotationY < MathHelper.PiOver4 || rotationY > MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                x = 0;
+                dradleSide = DradleSide.Pey;
             }
-            else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver4 )
+            else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                x = 1;
+                dradleSide = DradleSide.Gimel;
             }
             else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                x = 2;
+                dradleSide = DradleSide.Nun;
             }
             else if (rotationY < MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver2 + MathHelper.PiOver4)
             {
-                x = 3;
-            }
-            else
-            {
-                x = 0;
+                dradleSide = DradleSide.Hey;
             }
 
-
-
-
-            switch (x)
-            {
-                case 0:
-                    dradleSide = eDradleSide.PEY;
-                    break;
-                case 1:
-                    dradleSide = eDradleSide.GIMEL;
-                    break;
-                case 2:
-                    dradleSide = eDradleSide.NUN ;
-                    break;
-                case 3:
-                    dradleSide = eDradleSide.HEY;
-                    break;
-                default: throw new Exception("should not happen");
-            }
             return dradleSide;
         }
 
