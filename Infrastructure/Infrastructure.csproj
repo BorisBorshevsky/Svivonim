@@ -51,6 +51,7 @@
     <Compile Include="Animators\ConcreteAnimators\WaypointsAnimator.cs" />
     <Compile Include="Animators\ConcreteAnimators\FadeAnimator.cs" />
     <Compile Include="Animators\SpriteAnimator.cs" />
+    <Compile Include="Common\Common.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Managers\CollisionsManager.cs" />
     <Compile Include="Managers\DummyInputManager.cs" />

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Dreidels.ObjectModel.Structured
+namespace Dreidels.ObjectModel
 {
     class SideWall : Base3DElement
     {
@@ -17,8 +14,6 @@ namespace Dreidels.ObjectModel.Structured
         protected VertexPositionColor[] m_Vertices;
 
         protected bool m_IsReverseOrder = false;
-
-
 
         public SideWall(Game i_Game, Vector3 i_Scale, Vector3 i_Position) : base(i_Game)
         {
@@ -32,16 +27,19 @@ namespace Dreidels.ObjectModel.Structured
             m_IsReverseOrder = i_IsReveseOrder;
         }
 
-
-
         protected override Vector3[] createStartCoordinates()
         {
             var coordinates = new Vector3[4];
-            coordinates[0] = new Vector3(-1, 0, -1) * Scale + Position;
-            coordinates[1] = new Vector3(-1, 0, 1) * Scale + Position;
-            coordinates[2] = new Vector3(1, 0, -1) * Scale + Position;
-            coordinates[3] = new Vector3(1, 0, 1) * Scale + Position;
+            coordinates[0] = new Vector3(-1, 0, -1) * m_Scale + Position;
+            coordinates[1] = new Vector3(-1, 0, 1) * m_Scale + Position;
+            coordinates[2] = new Vector3(1, 0, -1) * m_Scale + Position;
+            coordinates[3] = new Vector3(1, 0, 1) * m_Scale + Position;
             return coordinates;
+        }
+
+        protected override short[] createIndicesMapping()
+        {
+            throw new InvalidOperationException("method not allowed");
         }
 
         protected override void LoadContent()
@@ -51,14 +49,10 @@ namespace Dreidels.ObjectModel.Structured
 
             m_VerticesCoordinates = createStartCoordinates();
 
-            
-
-            createVerices();
-
-
+            CreateVerices();
         }
 
-        protected void createVerices()
+        protected void CreateVerices()
         {
             m_Vertices = new VertexPositionColor[]
             {
@@ -67,7 +61,7 @@ namespace Dreidels.ObjectModel.Structured
                 new VertexPositionColor(m_VerticesCoordinates[2], Color.Fuchsia),
                 new VertexPositionColor(m_VerticesCoordinates[3], Color.Fuchsia),
             };
-//            r_RasterizerState.CullMode = CullMode.None;
+
 
             if (m_IsReverseOrder)
             {

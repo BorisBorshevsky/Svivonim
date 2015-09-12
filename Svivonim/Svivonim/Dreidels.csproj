@@ -49,7 +49,7 @@
     <Compile Include="ObjectModel\Dreidel1.cs" />
     <Compile Include="ObjectModel\DreidelBase.cs" />
     <Compile Include="ObjectModel\Dreidel3.cs" />
-    <Compile Include="ObjectModel\DradleSide.cs" />
+    <Compile Include="ObjectModel\eDradleSide.cs" />
     <Compile Include="ObjectModel\Pyramid.cs" />
     <Compile Include="ObjectModel\Services\ICameraManager.cs" />
     <Compile Include="ObjectModel\Stick.cs" />

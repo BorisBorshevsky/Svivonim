@@ -14,13 +14,6 @@ namespace Dreidels.ObjectModel
             ((Base3DElement) this).Position = i_Position;
         }
 
-        public override void Initialize()
-        {
-
-            base.Initialize();
-            m_CameraManager = Game.Services.GetService<CameraManager>();
-        }
-
         protected override void LoadContent()
         {
             m_BasicEffect = new BasicEffect(this.GraphicsDevice);

@@ -1,5 +1,4 @@
-﻿using Dreidels.ObjectModel.Structured;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Dreidels.ObjectModel
 {
@@ -24,16 +23,16 @@ namespace Dreidels.ObjectModel
             this.Add(new SideWall(i_Game, Vector3.One, new Vector3(0, -1, 0)));
         }
 
-        protected Box(Game i_Game, Vector3 Position)
+        protected Box(Game i_Game, Vector3 i_Position)
             : this(i_Game)
         {
-            this.Position = Position;
+            this.Position = i_Position;
         }
 
-        protected Box(Game i_Game, Vector3 Position, Vector3 Scale)
-            : this(i_Game, Position)
+        protected Box(Game i_Game, Vector3 i_Position, Vector3 i_Scale)
+            : this(i_Game, i_Position)
         {
-            this.Scale = Scale;
+            this.Scale = i_Scale;
         }
 
         protected override Vector3[] createStartCoordinates()

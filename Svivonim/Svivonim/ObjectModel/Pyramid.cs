@@ -5,12 +5,8 @@ namespace Dreidels.ObjectModel
 {
     class Pyramid : Composite3DComponent
     {
-//        private VertexPositionColor[] m_Vertices;
-//        private Vector3[] m_VerticesCoordinates;
         private Color m_Color = Color.Blue;
-//        private BasicEffect m_BasicEffect;
         private VertexPositionColor[] m_ColorVertices;
-//        private VertexBuffer m_VertexBuffer;
         private short[] m_Indices;
 
 

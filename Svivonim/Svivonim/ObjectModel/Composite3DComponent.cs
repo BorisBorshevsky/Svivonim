@@ -37,7 +37,6 @@ namespace Dreidels.ObjectModel
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
             r_Components.ForEach(i_Element => i_Element.Update(gameTime));
         }
 

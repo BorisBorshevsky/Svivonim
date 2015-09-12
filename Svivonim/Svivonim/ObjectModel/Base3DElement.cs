@@ -6,7 +6,7 @@ namespace Dreidels.ObjectModel
 {
     abstract class Base3DElement : DrawableGameComponent
     {
-        protected CameraManager m_CameraManager;
+        protected ICameraManager m_CameraManager;
         private Vector3 m_Position = Vector3.Zero;
         private Vector3 m_Rotations = Vector3.Zero;
         private Vector3 m_Scales = Vector3.One;
@@ -17,7 +17,7 @@ namespace Dreidels.ObjectModel
         protected Vector3[] m_VerticesCoordinates;
         protected readonly RasterizerState r_RasterizerState = new RasterizerState();
 
-        protected Vector3 Scale = Vector3.One;
+        protected Vector3 m_Scale = Vector3.One;
 
         public virtual bool SpinEnabled { get; set; }
 
@@ -53,7 +53,7 @@ namespace Dreidels.ObjectModel
         {
             base.Initialize();
             r_RasterizerState.CullMode = CullMode.CullCounterClockwiseFace; //TODO: change back to CullCounterClockwiseFace
-            m_CameraManager = Game.Services.GetService<CameraManager>();
+            m_CameraManager = Game.Services.GetService<ICameraManager>();
         }
 
         protected override void UnloadContent()
@@ -73,7 +73,6 @@ namespace Dreidels.ObjectModel
 
             if (SpinEnabled)
             {
-                
                 m_Rotations.Y += (float)i_GameTime.ElapsedGameTime.TotalSeconds * m_RotationsPerSecond;
             }
 
@@ -88,9 +87,6 @@ namespace Dreidels.ObjectModel
 
         protected abstract Vector3[] createStartCoordinates();
 
-        protected virtual short[] createIndicesMapping()
-        {
-            return new short[0];
-        }
+        protected abstract short[] createIndicesMapping();
     }
 }

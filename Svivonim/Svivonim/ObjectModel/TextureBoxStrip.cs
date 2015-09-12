@@ -15,13 +15,6 @@ namespace Dreidels.ObjectModel
             Position = i_Position;
         }
 
-        public override void Initialize()
-        {
-
-            base.Initialize();
-            m_CameraManager = Game.Services.GetService<CameraManager>();
-        }
-
         protected VertexPositionTexture[] CreateTextureVertices()
         {
             var textureVerticale = new VertexPositionTexture[10];
