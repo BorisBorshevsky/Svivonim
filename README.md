@@ -1,3 +1,3 @@
 # Svivonim
 
-Project to demonstrate 3D with XNA
+A project to demonstrates 3D usage with XNA
